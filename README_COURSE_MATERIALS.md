@@ -2,7 +2,13 @@
 
 ## 📚 Course Structure
 
-This repository contains a complete course on **Agentic AI with LangGraph, LangChain, and LlamaIndex using local models via Ollama**.
+This repository contains a **complete dual-track course** on **Agentic AI with LangGraph, LangChain, and LlamaIndex using local models via Ollama**.
+
+**Two Learning Paths**:
+- **Technical Track** (`python/`) - For developers using Python, LangChain, LangGraph, LlamaIndex
+- **Non-Technical Track** (`n8n/`) - For non-coders using n8n visual workflows
+
+**Status**: Units 1-6 are **100% complete** with full instructor guides, exercises, and sample materials for both tracks.
 
 ### 📂 Directory Structure
 
@@ -58,21 +64,38 @@ langgraph/
 
 ## 🎯 Course Overview
 
-**Target Audience**: Software developers new to Agentic AI  
+**Target Audience**: 
+- **Technical Track**: Software developers, data scientists, ML engineers
+- **Non-Technical Track**: Product owners, business analysts, scrum masters
+
 **Duration**: 8-12 weeks  
 **Format**: Self-paced or instructor-led  
-**Prerequisites**: Basic Python knowledge
+
+**Prerequisites**: 
+- **Technical**: Basic Python knowledge
+- **Non-Technical**: None! Just curiosity and willingness to learn
 
 ### What You'll Learn
 
+**Both Tracks**:
 1. **Foundations** - Agent concepts, tools, memory
 2. **Environment Setup** - Ollama, local models, dependencies
-3. **LangChain** - Chains, prompts, memory systems
-4. **LangGraph** - Stateful workflows, multi-agent systems
-5. **LlamaIndex** - RAG, document indexing, retrieval
-6. **Integration** - Combining all frameworks
-7. **Production** - Deployment, monitoring, optimization
-8. **Advanced** - Cutting-edge patterns and architectures
+3. **Workflows** - Multi-step processes and chains
+4. **State Machines** - Stateful workflows with LangGraph/n8n
+5. **Advanced Patterns** - Multi-agent systems, tool integration
+6. **RAG** - Knowledge bases and document Q&A
+
+**Technical Track Also**:
+- LangChain framework mastery
+- LangGraph for complex workflows
+- LlamaIndex for RAG systems
+- Production deployment patterns
+
+**Non-Technical Track Also**:
+- Visual workflow design
+- n8n automation platform
+- Rapid prototyping
+- Business process automation
 
 ---
 
@@ -342,8 +365,17 @@ python python/sample_codes/unit_06_llamaindex_rag.py
 
 ## 👨‍🏫 Instructor Resources
 
-### Unit 1 Instructor Guide
-**File**: `python/instructor_guide/unit_01_solutions.md`
+### Technical Track Instructor Guides
+**Location**: `python/instructor_guide/`
+
+**Complete for Units 1-6**:
+- `unit_01_solutions.md` - Complete solutions, teaching tips, rubrics
+- `unit_02_solutions.md` - Environment setup guide and troubleshooting
+- `unit_03_solutions.md` - LangChain fundamentals solutions
+- `unit_04_solutions.md` - LangGraph introduction solutions
+- `unit_05_solutions.md` - Advanced LangGraph patterns
+- `unit_06_solutions.md` - RAG and LlamaIndex solutions
+- `units_02-06_general_strategies.md` - Teaching strategies across units
 
 **What's Included**:
 - ✅ Complete solutions for all exercises
@@ -353,13 +385,28 @@ python python/sample_codes/unit_06_llamaindex_rag.py
 - ✅ Grading rubrics
 - ✅ Extension ideas
 - ✅ Assessment criteria
+- ✅ Time management suggestions
 
-**Key Sections**:
-1. Exercise-by-exercise solutions
-2. Explanation of concepts
-3. Troubleshooting common issues
-4. Best practices for teaching
-5. Time management suggestions
+### Non-Technical Track Instructor Guides
+**Location**: `n8n/instructor_guide/`
+
+**Complete for Units 1-6**:
+- `unit_01_solutions.md` - Visual workflow solutions and teaching strategies
+- `unit_02_solutions.md` - n8n environment setup guide
+- `unit_03_solutions.md` - Building workflows solutions
+- `unit_04_solutions.md` - Stateful workflow solutions
+- `unit_05_solutions.md` - Advanced patterns for n8n
+- `unit_06_solutions.md` - RAG systems in n8n
+- `units_02-06_general_strategies.md` - Teaching non-technical learners
+
+**What's Included**:
+- ✅ Complete workflow solutions
+- ✅ Teaching strategies for non-technical audiences
+- ✅ Common pitfalls and solutions
+- ✅ Engagement strategies
+- ✅ Assessment approaches
+- ✅ Time estimates
+- ✅ Success metrics
 
 ---
 

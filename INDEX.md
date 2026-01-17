@@ -98,24 +98,29 @@ Both tracks teach identical AI concepts - agents, tools, memory, RAG, multi-agen
 ### Technical Track:
 | Item | Count |
 |------|-------|
-| Sample Code Files | 6 files, 43+ examples |
-| Exercises | 37+ across 5 units |
+| Sample Code Files | 6 files, 43+ examples (Units 1-6) |
+| Exercises | 45+ across Units 1-6 |
 | Challenge Projects | 6 major projects |
-| Instructor Guides | Complete solutions |
+| Instructor Guides | **Complete for Units 1-6** |
+| - Individual Unit Guides | 6 files (units_01-06_solutions.md) |
+| - General Strategies | 1 file (units_02-06_general_strategies.md) |
 | Total Code Lines | 2000+ |
 
 ### Non-Technical Track:
 | Item | Count |
 |------|-------|
 | Curriculum Units | 12 (aligned with technical) |
-| Visual Exercises | 8+ hands-on workflows |
-| Workflow Templates | 8+ importable files |
-| Instructor Guide | Complete teaching strategies |
+| Visual Exercises | 48+ hands-on workflows (Units 1-6) |
+| Workflow Templates | 48+ importable files |
+| Instructor Guides | **Complete for Units 1-6** |
+| - Individual Unit Guides | 6 files (units_01-06_solutions.md) |
+| - General Strategies | 1 file (units_02-06_general_strategies.md) |
 
 ### Combined:
-- **Total Documentation**: 200+ pages
+- **Total Documentation**: 250+ pages
 - **Total Learning Hours**: 300-400 hours (both tracks)
 - **Duration**: 8-12 weeks per track
+- **Instructor Resources**: 14 complete guide files (7 per track)
 
 ---
 
@@ -284,19 +289,33 @@ Product Owner (n8n)              Developer (Python)
 - [x] All runnable and tested
 
 ### Exercises:
-- [x] 37+ technical exercises
-- [x] 8+ visual exercises (Unit 1)
-- [x] 6+ challenge projects each track
+- [x] 45+ technical exercises (Units 1-6)
+- [x] 48+ visual exercises (Units 1-6)
+- [x] 12+ challenge projects (6 per track)
 
 ### Teaching Resources:
-- [x] Technical instructor guide
-- [x] Non-technical instructor guide
+- [x] **Technical instructor guides (7 files)**
+  - [x] unit_01_solutions.md
+  - [x] unit_02_solutions.md
+  - [x] unit_03_solutions.md
+  - [x] unit_04_solutions.md
+  - [x] unit_05_solutions.md
+  - [x] unit_06_solutions.md
+  - [x] units_02-06_general_strategies.md
+- [x] **Non-technical instructor guides (7 files)**
+  - [x] unit_01_solutions.md
+  - [x] unit_02_solutions.md
+  - [x] unit_03_solutions.md
+  - [x] unit_04_solutions.md
+  - [x] unit_05_solutions.md
+  - [x] unit_06_solutions.md
+  - [x] units_02-06_general_strategies.md
 - [x] Solutions for all exercises
 - [x] Common pitfalls documented
 - [x] Teaching strategies included
 
 ### Workflows
-- [x] 8+ n8n workflow templates
+- [x] 48+ n8n workflow templates
 - [x] Importable JSON files
 - [x] Documentation for each
 

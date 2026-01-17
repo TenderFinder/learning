@@ -20,7 +20,9 @@ This repository is a **complete learning resource** for building **Agentic AI sy
 - ✅ **Production-Ready** - Real-world patterns and best practices
 - ✅ **Comprehensive** - 12 units covering fundamentals to advanced topics
 - ✅ **Hands-On** - 90+ exercises and 12+ challenge projects
-- ✅ **Complete Materials** - Sample code, exercises, solutions, and teaching guides
+- ✅ **Complete Materials for Units 1-6** - Sample code, exercises, and full instructor guides
+- ✅ **Separated Solutions** - Individual instructor guides for each unit
+- ✅ **Teaching Strategies** - Comprehensive guides for both technical and non-technical tracks
 
 ---
 
@@ -214,6 +216,8 @@ langgraph/
 | **Challenge Projects** | 12+ real-world projects |
 | **Documentation Pages** | 250+ pages |
 | **Workflow Templates** | 48+ importable n8n workflows |
+| **Instructor Guides** | Complete for Units 1-6 (both tracks) |
+| **Teaching Resources** | Solutions + strategies for each unit |
 
 ---
 
