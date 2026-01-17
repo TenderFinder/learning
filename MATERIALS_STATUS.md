@@ -141,34 +141,48 @@ Non-Technical Track:
 ✅ COURSE_SUMMARY.md (7 KB)
 ✅ INDEX.md (10 KB)
 
-✅ sample_codes/unit_01_introduction.py (11 KB, 8 examples)
-✅ sample_codes/unit_02_environment_setup.py (15 KB, 9 examples)
-✅ sample_codes/unit_03_langchain_fundamentals.py (7 KB, 10 examples)
-✅ sample_codes/unit_04_langgraph_intro.py (11 KB, 6 examples)
-✅ sample_codes/unit_05_advanced_langgraph.py (13 KB, 3 examples)
-✅ sample_codes/unit_06_llamaindex_rag.py (13 KB, 7 examples)
+✅ python/sample_codes/unit_01_introduction.py (11 KB, 8 examples)
+✅ python/sample_codes/unit_02_environment_setup.py (15 KB, 9 examples)
+✅ python/sample_codes/unit_03_langchain_fundamentals.py (7 KB, 10 examples)
+✅ python/sample_codes/unit_04_langgraph_intro.py (11 KB, 6 examples)
+✅ python/sample_codes/unit_05_advanced_langgraph.py (13 KB, 3 examples)
+✅ python/sample_codes/unit_06_llamaindex_rag.py (13 KB, 7 examples)
 
-✅ exercises/unit_01_exercises.md (9 KB, 8 exercises)
-✅ exercises/unit_02_exercises.md (10 KB, 8 exercises)
-✅ exercises/unit_03_exercises.md (4 KB, 6 exercises)
-✅ exercises/unit_04_exercises.md (6 KB, 7 exercises)
-✅ exercises/unit_05_exercises.md (NEW, 8 exercises)
-✅ exercises/unit_06_exercises.md (7 KB, 8 exercises)
+✅ python/exercises/unit_01_exercises.md (9 KB, 8 exercises)
+✅ python/exercises/unit_02_exercises.md (10 KB, 8 exercises)
+✅ python/exercises/unit_03_exercises.md (4 KB, 6 exercises)
+✅ python/exercises/unit_04_exercises.md (6 KB, 7 exercises)
+✅ python/exercises/unit_05_exercises.md (NEW, 8 exercises)
+✅ python/exercises/unit_06_exercises.md (7 KB, 8 exercises)
 
-✅ instructor_guide/unit_01_solutions.md (15 KB, complete)
+✅ python/instructor_guide/unit_01_solutions.md (15 KB, complete)
+✅ python/instructor_guide/unit_02_solutions.md (complete)
+✅ python/instructor_guide/unit_03_solutions.md (complete)
+✅ python/instructor_guide/unit_04_solutions.md (complete)
+✅ python/instructor_guide/unit_05_solutions.md (complete)
+✅ python/instructor_guide/unit_06_solutions.md (complete)
 ```
 
 ### Non-Technical Track Files:
 ```
-✅ non_technical/README.md (comprehensive)
-✅ non_technical/curriculum/AGENTIC_AI_CURRICULUM_N8N.md (complete 12 units)
+✅ n8n/README.md (comprehensive)
+✅ n8n/curriculum/AGENTIC_AI_CURRICULUM_N8N.md (complete 12 units)
 
-✅ non_technical/exercises/unit_01_exercises.md (8 exercises)
-✅ non_technical/exercises/unit_02_exercises.md (NEW, 8 exercises)
+✅ n8n/exercises/unit_01_exercises.md (8 exercises)
+✅ n8n/exercises/unit_02_exercises.md (NEW, 8 exercises)
+✅ n8n/exercises/unit_03_exercises.md (NEW, 8 exercises)
+✅ n8n/exercises/unit_04_exercises.md (NEW, 8 exercises)
+✅ n8n/exercises/unit_05_exercises.md (NEW, 8 exercises)
+✅ n8n/exercises/unit_06_exercises.md (NEW, 8 exercises)
 
-✅ non_technical/workflows/README_WORKFLOWS.md (8 templates documented)
+✅ n8n/workflows/README_WORKFLOWS.md (8 templates documented)
 
-✅ non_technical/instructor_guide/unit_01_solutions.md (complete)
+✅ n8n/instructor_guide/unit_01_solutions.md (complete)
+✅ n8n/instructor_guide/unit_02_solutions.md (complete)
+✅ n8n/instructor_guide/unit_03_solutions.md (complete)
+✅ n8n/instructor_guide/unit_04_solutions.md (complete)
+✅ n8n/instructor_guide/unit_05_solutions.md (complete)
+✅ n8n/instructor_guide/unit_06_solutions.md (complete)
 ```
 
 **Total Files**: 25+  

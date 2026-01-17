@@ -21,12 +21,12 @@
 
 | Unit | File | Coverage | Examples |
 |------|------|----------|----------|
-| 1 | `unit_01_introduction.py` | Foundation concepts | 8 examples |
-| 2 | `unit_02_environment_setup.py` | Setup verification | 9 examples |
-| 3 | `unit_03_langchain_fundamentals.py` | LangChain basics | 10 examples |
-| 4 | `unit_04_langgraph_intro.py` | LangGraph intro | 6 examples |
-| 5 | `unit_05_advanced_langgraph.py` | Advanced patterns | 3 examples |
-| 6 | `unit_06_llamaindex_rag.py` | RAG systems | 7 examples |
+| 1 | `python/sample_codes/unit_01_introduction.py` | Foundation concepts | 8 examples |
+| 2 | `python/sample_codes/unit_02_environment_setup.py` | Setup verification | 9 examples |
+| 3 | `python/sample_codes/unit_03_langchain_fundamentals.py` | LangChain basics | 10 examples |
+| 4 | `python/sample_codes/unit_04_langgraph_intro.py` | LangGraph intro | 6 examples |
+| 5 | `python/sample_codes/unit_05_advanced_langgraph.py` | Advanced patterns | 3 examples |
+| 6 | `python/sample_codes/unit_06_llamaindex_rag.py` | RAG systems | 7 examples |
 
 **Total**: 43+ working code examples
 
@@ -34,11 +34,11 @@
 
 | Unit | File | Exercises | Challenge Projects |
 |------|------|-----------|-------------------|
-| 1 | `unit_01_exercises.md` | 8 exercises | 1 (Personal Assistant) |
-| 2 | `unit_02_exercises.md` | 8 exercises | 1 (Setup Automation) |
-| 3 | `unit_03_exercises.md` | 6 exercises | 1 (Learning Tutor) |
-| 4 | `unit_04_exercises.md` | 7 exercises | 1 (Task Planner) |
-| 6 | `unit_06_exercises.md` | 8 exercises | 2 (Knowledge Base + Agentic RAG) |
+| 1 | `python/exercises/unit_01_exercises.md` | 8 exercises | 1 (Personal Assistant) |
+| 2 | `python/exercises/unit_02_exercises.md` | 8 exercises | 1 (Setup Automation) |
+| 3 | `python/exercises/unit_03_exercises.md` | 6 exercises | 1 (Learning Tutor) |
+| 4 | `python/exercises/unit_04_exercises.md` | 7 exercises | 1 (Task Planner) |
+| 6 | `python/exercises/unit_06_exercises.md` | 8 exercises | 2 (Knowledge Base + Agentic RAG) |
 
 **Total**: 37+ exercises + 6 major projects
 
@@ -46,7 +46,7 @@
 
 | Unit | File | Contains |
 |------|------|----------|
-| 1 | `unit_01_solutions.md` | Complete solutions, teaching tips, rubrics |
+| 1 | `python/instructor_guide/unit_01_solutions.md` | Complete solutions, teaching tips, rubrics |
 
 **Coverage**: Solutions, common mistakes, grading criteria, extension ideas
 
@@ -62,11 +62,11 @@
 Course Flow:
 1. Read AGENTIC_AI_CURRICULUM.md (theory)
    ↓
-2. Run sample_codes/unit_XX.py (practice)
+2. Run python/sample_codes/unit_XX.py (practice)
    ↓
-3. Complete exercises/unit_XX_exercises.md (apply)
+3. Complete python/exercises/unit_XX_exercises.md (apply)
    ↓
-4. Check instructor_guide/unit_XX_solutions.md (verify)
+4. Check python/instructor_guide/unit_XX_solutions.md (verify)
 ```
 
 ---
@@ -79,10 +79,10 @@ Course Flow:
    open AGENTIC_AI_CURRICULUM.md
    
    # 2. Set up environment (Unit 2)
-   python sample_codes/unit_02_environment_setup.py
+   python python/sample_codes/unit_02_environment_setup.py
    
    # 3. Start learning
-   python sample_codes/unit_01_introduction.py
+   python python/sample_codes/unit_01_introduction.py
    ```
 
 2. **For Instructors**:
@@ -94,7 +94,7 @@ Course Flow:
    open README_COURSE_MATERIALS.md
    
    # 3. Check solutions
-   open instructor_guide/unit_01_solutions.md
+   open python/instructor_guide/unit_01_solutions.md
    ```
 
 ---
@@ -234,7 +234,7 @@ Before starting, ensure you have:
 ### Where to Get Help
 
 1. **Technical Issues**: README_COURSE_MATERIALS.md (Troubleshooting section)
-2. **Exercise Help**: instructor_guide/ (solutions and hints)
+2. **Exercise Help**: python/instructor_guide/ (solutions and hints)
 3. **Concept Clarification**: AGENTIC_AI_CURRICULUM.md (detailed explanations)
 4. **Community**: LangChain Discord, forums
 
@@ -264,7 +264,7 @@ By the end of this course, you should be able to:
 
 ### To Start Teaching:
 1. Review `AGENTIC_AI_CURRICULUM.md`
-2. Check `instructor_guide/unit_01_solutions.md`
+2. Check `python/instructor_guide/unit_01_solutions.md`
 3. Customize for your audience
 
 ---
@@ -279,9 +279,9 @@ By the end of this course, you should be able to:
 - 📄 `AGENTIC_AI_CURRICULUM.md` - Main curriculum (12 units)
 - 📄 `README_COURSE_MATERIALS.md` - Complete usage guide
 - 📄 `COURSE_SUMMARY.md` - This quick reference
-- 📁 `sample_codes/` - Working code examples (6+ files)
-- 📁 `exercises/` - Student exercises (4+ units)
-- 📁 `instructor_guide/` - Teaching resources and solutions
+- 📁 `python/sample_codes/` - Working code examples (6+ files)
+- 📁 `python/exercises/` - Student exercises (4+ units)
+- 📁 `python/instructor_guide/` - Teaching resources and solutions
 
 **Total Pages**: 100+ pages of content
 **Total Code**: 2000+ lines of working examples

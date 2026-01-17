@@ -1,0 +1,13 @@
+# System files
+.DS_Store
+
+# Python
+__pycache__/
+*.pyc
+venv/
+python/venv/
+.env
+
+# Instructor Guides (Solutions)
+python/instructor_guide/
+n8n/instructor_guide/

@@ -1,0 +1,187 @@
+{
+  "workflows": [
+    {
+      "name": "Unit 1: Hello World AI",
+      "description": "Simple AI interaction via webhook",
+      "difficulty": "Beginner",
+      "nodes": ["Webhook", "Ollama", "Respond to Webhook"],
+      "concepts": ["Basic AI interaction", "Webhook triggers", "Simple responses"],
+      "template": {
+        "meta": {
+          "instanceId": "n8n-course"
+        },
+        "nodes": [
+          {
+            "parameters": {
+              "httpMethod": "GET",
+              "path": "hello",
+              "responseMode": "responseNode"
+            },
+            "name": "Webhook",
+            "type": "n8n-nodes-base.webhook",
+            "position": [250, 300]
+          },
+          {
+            "parameters": {
+              "model": "llama3",
+              "prompt": "={{ $json.query.text }}"
+            },
+            "name": "Ollama AI",
+            "type": "n8n-nodes-base.ollama",
+            "position": [450, 300]
+          },
+          {
+            "parameters": {
+              "respondWith": "text",
+              "responseBody": "={{ $json.message }}"
+            },
+            "name": "Respond to Webhook",
+            "type": "n8n-nodes-base.respondToWebhook",
+            "position": [650, 300]
+          }
+        ],
+        "connections": {
+          "Webhook": {
+            "main": [[{"node": "Ollama AI", "type": "main", "index": 0}]]
+          },
+          "Ollama AI": {
+            "main": [[{"node": "Respond to Webhook", "type": "main", "index": 0}]]
+          }
+        }
+      }
+    },
+    {
+      "name": "Unit 2: AI Provider Comparison",
+      "description": "Compare responses from different AI providers",
+      "difficulty": "Intermediate",
+      "nodes": ["Webhook", "Switch", "Ollama", "OpenAI", "Merge", "Respond"],
+      "concepts": ["Conditional routing", "Multiple AI providers", "Data merging"]
+    },
+    {
+      "name": "Unit 3: Multi-Step Content Pipeline",
+      "description": "Generate blog content in multiple steps",
+      "difficulty": "Intermediate",
+      "nodes": ["Manual Trigger", "Generate Title", "Generate Outline", "Write Intro", "Format", "Email"],
+      "concepts": ["Sequential workflows", "Data passing", "Output formatting"],
+      "steps": [
+        "1. Receive topic via manual input or webhook",
+        "2. AI generates title",
+        "3. AI creates outline using title",
+        "4. AI writes introduction using title + outline",
+        "5. Format all outputs into markdown",
+        "6. Send via email or save to docs"
+      ]
+    },
+    {
+      "name": "Unit 3: Email Classifier with Routing",
+      "description": "Classify and route emails intelligently",
+      "difficulty": "Advanced",
+      "nodes": ["Email Trigger", "AI Classifier", "IF Node", "Slack", "Draft Response", "Archive"],
+      "concepts": ["Conditional logic", "Multi-path workflows", "Integration"],
+      "routing_logic": {
+        "urgent": "Send to Slack + Alert",
+        "question": "Draft AI response + await approval",
+        "newsletter": "Archive automatically",
+        "other": "Tag for later review"
+      }
+    },
+    {
+      "name": "Unit 4: Order Processing State Machine",
+      "description": "Multi-state order workflow",
+      "difficulty": "Advanced",
+      "states": ["new", "validated", "payment_processing", "fulfilled", "completed", "cancelled", "refunded"],
+      "nodes": ["Webhook", "Validate", "ProcessPayment", "Fulfill", "Database", "Notifications"],
+      "concepts": ["State management", "Error states", "State transitions"]
+    },
+    {
+      "name": "Unit 4: Iterative Research Assistant",
+      "description": "Loops until satisfactory answer found",
+      "difficulty": "Advanced",
+      "max_iterations": 5,
+      "nodes": ["Input", "Search", "AI Analyze", "Quality Check", "Loop Decision", "Final Answer"],
+      "concepts": ["Loops", "Quality assessment", "Iterative improvement"],
+      "flow": "Question → Search → Check Quality → Loop if needed (max 5x) → Answer"
+    },
+    {
+      "name": "Unit 5: Multi-Agent Content Team",
+      "description": "Specialized agents collaborate on content",
+      "difficulty": "Expert",
+      "agents": {
+        "researcher": "Gathers information and facts",
+        "writer": "Creates engaging content",
+        "editor": "Reviews and improves",
+        "seo": "Optimizes for search engines"
+      },
+      "nodes": ["Topic Input", "Researcher AI", "Writer AI", "Editor AI", "SEO AI", "Final Output"],
+      "concepts": ["Multi-agent systems", "Agent collaboration", "Specialized prompts"]
+    },
+    {
+      "name": "Unit 5: Human Approval Workflow",
+      "description": "Pauses for human input before continuing",
+      "difficulty": "Advanced",
+      "nodes": ["Generate Content", "Send to Slack", "Wait for Response", "IF Approved", "Publish", "Revise"],
+      "concepts": ["Human-in-the-loop", "Slack integration", "Conditional continuation"],
+      "buttons": ["Approve", "Reject", "Request Changes"]
+    },
+    {
+      "name": "Unit 5: Parallel Data Processing",
+      "description": "Process multiple sources simultaneously",
+      "difficulty": "Intermediate",
+      "parallel_branches": 3,
+      "nodes": ["Input", "Split", "Process A", "Process B", "Process C", "Merge", "Analyze", "Report"],
+      "concepts": ["Parallel execution", "Data merging", "Performance optimization"],
+      "performance": "3x faster than sequential"
+    },
+    {
+      "name": "Unit 6: Simple RAG System",
+      "description": "Document Q&A with source attribution",
+      "difficulty": "Advanced",
+      "nodes": ["Document Loader", "Text Splitter", "Embeddings", "Vector Store", "Query", "AI Answer", "Response"],
+      "concepts": ["RAG", "Vector embeddings", "Semantic search"],
+      "setup": [
+        "1. Load documents (PDF, TXT, MD)",
+        "2. Split into chunks (1000 chars)",
+        "3. Create embeddings (Ollama/OpenAI)",
+        "4. Store in vector DB (Pinecone/Qdrant)",
+        "5. Query: Search → Retrieve → Generate answer"
+      ]
+    },
+    {
+      "name": "Unit 6: Conversational Knowledge Bot",
+      "description": "RAG + Memory for conversations",
+      "difficulty": "Expert",
+      "nodes": ["Chat Trigger", "Load History", "Search Knowledge Base", "AI with Context", "Save History", "Respond"],
+      "concepts": ["Conversational RAG", "Memory + RAG", "Context management"],
+      "features": [
+        "Remembers conversation history",
+        "Searches knowledge base with context",
+        "Provides source citations",
+        "Follow-up question handling"
+      ]
+    }
+  ],
+  "implementation_notes": {
+    "n8n_version": "1.0+",
+    "required_integrations": [
+      "Ollama (local AI)",
+      "Slack/Discord (notifications)",
+      "Google Workspace (docs, sheets, email)",
+      "Airtable/Notion (databases)",
+      "Pinecone/Qdrant (vector storage)"
+    ],
+    "credential_setup": [
+      "Ollama: http://localhost:11434",
+      "OpenAI: API key required",
+      "Slack: OAuth or incoming webhook",
+      "Google: OAuth credentials",
+      "Vector DB: API keys from providers"
+    ]
+  },
+  "usage_instructions": {
+    "import": "In n8n: Workflows → Import from File/URL → Select JSON",
+    "configure": "Update credentials in each node",
+    "test": "Use 'Execute Workflow' button",
+    "activate": "Toggle switch in top right",
+    "export": "Workflows →  → Download"
+  }
+}

@@ -12,13 +12,13 @@ A **comprehensive, dual-track curriculum** for teaching **Agentic AI** to both t
 - **Tools**: LangChain, LangGraph, LlamaIndex, Python
 - **For**: Software Developers, Data Scientists, Engineers
 - **Approach**: Code-first, programmatic control
-- **Location**: Root folder
+- **Location**: `python/` folder
 
 ### 🎨 **Non-Technical Track** (n8n/Visual)
 - **Tools**: n8n visual workflows, same AI concepts
 - **For**: Product Owners, Scrum Masters, Business Analysts
 - **Approach**: Visual-first, drag-and-drop
-- **Location**: `non_technical/` folder
+- **Location**: `n8n/` folder
 
 ### ✨ **Same Concepts, Different Tools**
 Both tracks teach identical AI concepts - agents, tools, memory, RAG, multi-agent systems - just through different mediums!
@@ -34,39 +34,61 @@ Both tracks teach identical AI concepts - agents, tools, memory, RAG, multi-agen
 ├── 📄 AGENTIC_AI_CURRICULUM.md          Technical curriculum
 ├── 📄 README_COURSE_MATERIALS.md        Technical guide
 ├── 📄 COURSE_SUMMARY.md                 Quick reference
+├── � MATERIALS_STATUS.md               Project status
+├── 📄 PROJECT_COMPLETE.md               Completion summary
 │
-├── 📁 sample_codes/                     🔧 Technical code examples
-│   ├── unit_01_introduction.py          (43+ examples total)
-│   ├── unit_02_environment_setup.py
-│   ├── unit_03_langchain_fundamentals.py
-│   ├── unit_04_langgraph_intro.py
-│   ├── unit_05_advanced_langgraph.py
-│   └── unit_06_llamaindex_rag.py
+├── 📁 python/                           🔧 TECHNICAL TRACK (Python)
+│   │
+│   ├── 📁 sample_codes/                 Code examples
+│   │   ├── unit_01_introduction.py      (43+ examples total)
+│   │   ├── unit_02_environment_setup.py
+│   │   ├── unit_03_langchain_fundamentals.py
+│   │   ├── unit_04_langgraph_intro.py
+│   │   ├── unit_05_advanced_langgraph.py
+│   │   └── unit_06_llamaindex_rag.py
+│   │
+│   ├── 📁 exercises/                    Technical exercises
+│   │   ├── unit_01_exercises.md         (37+ exercises)
+│   │   ├── unit_02_exercises.md
+│   │   ├── unit_03_exercises.md
+│   │   ├── unit_04_exercises.md
+│   │   ├── unit_05_exercises.md
+│   │   └── unit_06_exercises.md
+│   │
+│   └── 📁 instructor_guide/             Teaching resources
+│       ├── unit_01_solutions.md
+│       ├── unit_02_solutions.md
+│       ├── unit_03_solutions.md
+│       ├── unit_04_solutions.md
+│       ├── unit_05_solutions.md
+│       ├── unit_06_solutions.md
+│       └── units_02-06_general_strategies.md
 │
-├── 📁 exercises/                        ✏️ Technical exercises
-│   ├── unit_01_exercises.md             (37+ exercises)
-│   ├── unit_02_exercises.md
-│   ├── unit_03_exercises.md
-│   ├── unit_04_exercises.md
-│   └── unit_06_exercises.md
-│
-├── 📁 instructor_guide/                 👨‍🏫 Technical teaching resources
-│   └── unit_01_solutions.md
-│
-└── 📁 non_technical/                    🎨 NON-TECHNICAL TRACK
+└── 📁 n8n/                              🎨 NON-TECHNICAL TRACK (n8n)
     ├── README.md                        ⭐ Start here for non-tech
     │
     ├── curriculum/
     │   └── AGENTIC_AI_CURRICULUM_N8N.md Complete n8n curriculum
     │
     ├── exercises/
-    │   └── unit_01_exercises.md         Visual exercises
+    │   ├── unit_01_exercises.md         Visual exercises
+    │   ├── unit_02_exercises.md
+    │   ├── unit_03_exercises.md
+    │   ├── unit_04_exercises.md
+    │   ├── unit_05_exercises.md
+    │   └── unit_06_exercises.md
     │
     ├── workflows/
     │   └── README_WORKFLOWS.md          n8n workflow templates
     │
-    └── instructor_guide/
-        └── unit_01_solutions.md         Teaching non-technical learners
+    └── instructor_guide/                Teaching non-technical
+        ├── unit_01_solutions.md
+        ├── unit_02_solutions.md
+        ├── unit_03_solutions.md
+        ├── unit_04_solutions.md
+        ├── unit_05_solutions.md
+        ├── unit_06_solutions.md
+        └── units_02-06_general_strategies.md
 ```
 
 ---
@@ -105,31 +127,31 @@ Both tracks teach identical AI concepts - agents, tools, memory, RAG, multi-agen
 open README_COURSE_MATERIALS.md
 
 # 2. Set up environment
-python sample_codes/unit_02_environment_setup.py
+python python/sample_codes/unit_02_environment_setup.py
 
 # 3. Start learning
-python sample_codes/unit_01_introduction.py
+python python/sample_codes/unit_01_introduction.py
 
 # 4. Do exercises
-open exercises/unit_01_exercises.md
+open python/exercises/unit_01_exercises.md
 ```
 
 ### For Product Owners/Non-Technical:
 ```bash
 # 1. Read non-technical README
-open non_technical/README.md
+open n8n/README.md
 
 # 2. Install n8n (desktop app)
 # Download from n8n.io
 
 # 3. Read curriculum
-open non_technical/curriculum/AGENTIC_AI_CURRICULUM_N8N.md
+open n8n/curriculum/AGENTIC_AI_CURRICULUM_N8N.md
 
 # 4. Try first workflow
-# Import from non_technical/workflows/
+# Import from n8n/workflows/
 
 # 5. Do exercises
-open non_technical/exercises/unit_01_exercises.md
+open n8n/exercises/unit_01_exercises.md
 ```
 
 ### For Instructors (Teaching Both):
@@ -138,11 +160,11 @@ open non_technical/exercises/unit_01_exercises.md
 open AGENTIC_AI_CURRICULUM.md
 
 # 2. Review non-technical curriculum
-open non_technical/curriculum/AGENTIC_AI_CURRICULUM_N8N.md
+open n8n/curriculum/AGENTIC_AI_CURRICULUM_N8N.md
 
 # 3. Check teaching guides
-open instructor_guide/unit_01_solutions.md
-open non_technical/instructor_guide/unit_01_solutions.md
+open python/instructor_guide/unit_01_solutions.md
+open n8n/instructor_guide/unit_01_solutions.md
 
 # 4. Prepare both environments
 # - Python + Ollama (technical)
@@ -447,16 +469,16 @@ Product Owner (n8n)              Developer (Python)
 ### Technical:
 - 📖 `AGENTIC_AI_CURRICULUM.md`
 - 📘 `README_COURSE_MATERIALS.md`
-- 🔧 `sample_codes/unit_01_introduction.py`
-- ✏️ `exercises/unit_01_exercises.md`
-- 👨‍🏫 `instructor_guide/unit_01_solutions.md`
+- 🔧 `python/sample_codes/unit_01_introduction.py`
+- ✏️ `python/exercises/unit_01_exercises.md`
+- 👨‍🏫 `python/instructor_guide/unit_01_solutions.md`
 
 ### Non-Technical:
-- 📖 `non_technical/curriculum/AGENTIC_AI_CURRICULUM_N8N.md`
-- 📘 `non_technical/README.md`
-- 🎨 `non_technical/workflows/README_WORKFLOWS.md`
-- ✏️ `non_technical/exercises/unit_01_exercises.md`
-- 👨‍🏫 `non_technical/instructor_guide/unit_01_solutions.md`
+- 📖 `n8n/curriculum/AGENTIC_AI_CURRICULUM_N8N.md`
+- 📘 `n8n/README.md`
+- 🎨 `n8n/workflows/README_WORKFLOWS.md`
+- ✏️ `n8n/exercises/unit_01_exercises.md`
+- 👨‍🏫 `n8n/instructor_guide/unit_01_solutions.md`
 
 ---
 

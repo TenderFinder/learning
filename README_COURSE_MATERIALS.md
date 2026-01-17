@@ -11,26 +11,47 @@ langgraph/
 ├── AGENTIC_AI_CURRICULUM.md    # Main curriculum document
 ├── README_COURSE_MATERIALS.md # This file
 │
-├── sample_codes/                # Working code examples
-│   ├── unit_01_introduction.py
-│   ├── unit_02_environment_setup.py
-│   ├── unit_03_langchain_fundamentals.py
-│   ├── unit_04_langgraph_intro.py
-│   ├── unit_06_llamaindex_rag.py
-│   └── ... (more units)
+├── python/                      # Technical Track
+│   ├── sample_codes/            # Working code examples
+│   │   ├── unit_01_introduction.py
+│   │   ├── unit_02_environment_setup.py
+│   │   ├── unit_03_langchain_fundamentals.py
+│   │   ├── unit_04_langgraph_intro.py
+│   │   ├── unit_05_advanced_langgraph.py
+│   │   ├── unit_06_llamaindex_rag.py
+│   │   └── ... (more units)
+│   │
+│   ├── exercises/               # Student exercises
+│   │   ├── unit_01_exercises.md
+│   │   ├── unit_02_exercises.md
+│   │   ├── unit_03_exercises.md
+│   │   ├── unit_04_exercises.md
+│   │   ├── unit_05_exercises.md
+│   │   ├── unit_06_exercises.md
+│   │   └── ... (more units)
+│   │
+│   └── instructor_guide/        # Solutions and teaching tips
+│       ├── unit_01_solutions.md
+│       ├── unit_02_solutions.md
+│       ├── unit_03_solutions.md
+│       ├── unit_04_solutions.md
+│       ├── unit_05_solutions.md
+│       ├── unit_06_solutions.md
+│       └── ... (more units)
 │
-├── exercises/                   # Student exercises
-│   ├── unit_01_exercises.md
-│   ├── unit_02_exercises.md
-│   ├── unit_03_exercises.md
-│   ├── unit_04_exercises.md
-│   ├── unit_06_exercises.md
-│   └── ... (more units)
-│
-└── instructor_guide/            # Solutions and teaching tips
-    ├── unit_01_solutions.md
-    ├── unit_02_solutions.md
-    └── ... (more units)
+└── n8n/                         # Non-Technical Track
+    ├── README.md
+    ├── curriculum/
+    │   └── AGENTIC_AI_CURRICULUM_N8N.md
+    ├── exercises/
+    │   ├── unit_01_exercises.md
+    │   ├── unit_02_exercises.md
+    │   └── ... (more units)
+    ├── workflows/
+    │   └── README_WORKFLOWS.md
+    └── instructor_guide/
+        ├── unit_01_solutions.md
+        └── ... (more units)
 ```
 
 ---
@@ -68,12 +89,12 @@ langgraph/
 2. **Follow This Sequence**:
    - Week 1: Unit 1 - Introduction
      - Read curriculum section
-     - Run sample code: `python sample_codes/unit_01_introduction.py`
-     - Complete exercises: `exercises/unit_01_exercises.md`
+     - Run sample code: `python python/sample_codes/unit_01_introduction.py`
+     - Complete exercises: `python/exercises/unit_01_exercises.md`
    
    - Week 2: Unit 2 - Environment Setup
-     - Run: `python sample_codes/unit_02_environment_setup.py`
-     - Complete: `exercises/unit_02_exercises.md`
+     - Run: `python python/sample_codes/unit_02_environment_setup.py`
+     - Complete: `python/exercises/unit_02_exercises.md`
    
    - Continue through all 12 units...
 
@@ -155,7 +176,7 @@ pip install python-dotenv jupyter requests
 
 ```bash
 # Run the setup verification
-python sample_codes/unit_02_environment_setup.py
+python python/sample_codes/unit_02_environment_setup.py
 ```
 
 Expected output: All checks ✅ passing
@@ -165,7 +186,7 @@ Expected output: All checks ✅ passing
 ## 📝 Sample Codes Overview
 
 ### Unit 1: Introduction to Agentic AI
-**File**: `sample_codes/unit_01_introduction.py`
+**File**: `python/sample_codes/unit_01_introduction.py`
 
 **What's Covered**:
 - ✅ Basic Ollama interaction
@@ -179,13 +200,13 @@ Expected output: All checks ✅ passing
 
 **Run it**:
 ```bash
-python sample_codes/unit_01_introduction.py
+python python/sample_codes/unit_01_introduction.py
 ```
 
 ---
 
 ### Unit 2: Environment Setup
-**File**: `sample_codes/unit_02_environment_setup.py`
+**File**: `python/sample_codes/unit_02_environment_setup.py`
 
 **What's Covered**:
 - ✅ Python environment verification
@@ -199,13 +220,13 @@ python sample_codes/unit_01_introduction.py
 
 **Run it**:
 ```bash
-python sample_codes/unit_02_environment_setup.py
+python python/sample_codes/unit_02_environment_setup.py
 ```
 
 ---
 
 ### Unit 3: LangChain Fundamentals
-**File**: `sample_codes/unit_03_langchain_fundamentals.py`
+**File**: `python/sample_codes/unit_03_langchain_fundamentals.py`
 
 **What's Covered**:
 - ✅ Prompt templates (simple, multi-variable, few-shot)
@@ -216,13 +237,13 @@ python sample_codes/unit_02_environment_setup.py
 
 **Run it**:
 ```bash
-python sample_codes/unit_03_langchain_fundamentals.py
+python python/sample_codes/unit_03_langchain_fundamentals.py
 ```
 
 ---
 
 ### Unit 4: LangGraph Introduction
-**File**: `sample_codes/unit_04_langgraph_intro.py`
+**File**: `python/sample_codes/unit_04_langgraph_intro.py`
 
 **What's Covered**:
 - ✅ State definitions
@@ -234,13 +255,13 @@ python sample_codes/unit_03_langchain_fundamentals.py
 
 **Run it**:
 ```bash
-python sample_codes/unit_04_langgraph_intro.py
+python python/sample_codes/unit_04_langgraph_intro.py
 ```
 
 ---
 
 ### Unit 6: LlamaIndex RAG
-**File**: `sample_codes/unit_06_llamaindex_rag.py`
+**File**: `python/sample_codes/unit_06_llamaindex_rag.py`
 
 **What's Covered**:
 - ✅ Document loading and indexing
@@ -253,7 +274,7 @@ python sample_codes/unit_04_langgraph_intro.py
 
 **Run it**:
 ```bash
-python sample_codes/unit_06_llamaindex_rag.py
+python python/sample_codes/unit_06_llamaindex_rag.py
 ```
 
 ---
@@ -261,7 +282,7 @@ python sample_codes/unit_06_llamaindex_rag.py
 ## 📋 Exercises Overview
 
 ### Unit 1 Exercises
-**File**: `exercises/unit_01_exercises.md`
+**File**: `python/exercises/unit_01_exercises.md`
 
 | Exercise | Difficulty | Time | Topics |
 |----------|-----------|------|--------|
@@ -276,7 +297,7 @@ python sample_codes/unit_06_llamaindex_rag.py
 | **Challenge Project** | Advanced | 4-6h | Complete system |
 
 ### Unit 3 Exercises
-**File**: `exercises/unit_03_exercises.md`
+**File**: `python/exercises/unit_03_exercises.md`
 
 | Exercise | Difficulty | Time | Topics |
 |----------|-----------|------|--------|
@@ -289,7 +310,7 @@ python sample_codes/unit_06_llamaindex_rag.py
 | **Challenge Project** | Advanced | 5-7h | Tutoring system |
 
 ### Unit 4 Exercises
-**File**: `exercises/unit_04_exercises.md`
+**File**: `python/exercises/unit_04_exercises.md`
 
 | Exercise | Difficulty | Time | Topics |
 |----------|-----------|------|--------|
@@ -303,7 +324,7 @@ python sample_codes/unit_06_llamaindex_rag.py
 | **Challenge Project** | Advanced | 6-8h | Task planner |
 
 ### Unit 6 Exercises
-**File**: `exercises/unit_06_exercises.md`
+**File**: `python/exercises/unit_06_exercises.md`
 
 | Exercise | Difficulty | Time | Topics |
 |----------|-----------|------|--------|
@@ -322,7 +343,7 @@ python sample_codes/unit_06_llamaindex_rag.py
 ## 👨‍🏫 Instructor Resources
 
 ### Unit 1 Instructor Guide
-**File**: `instructor_guide/unit_01_solutions.md`
+**File**: `python/instructor_guide/unit_01_solutions.md`
 
 **What's Included**:
 - ✅ Complete solutions for all exercises
@@ -556,7 +577,7 @@ For questions or feedback:
 
 **Version**: 1.0  
 **Last Updated**: January 2026  
-**Maintained by**: [Your Name]
+**Maintained by**: [@rahul-trip](https://github.com/rahul-trip)
 
 ---
 
@@ -564,7 +585,7 @@ For questions or feedback:
 
 1. ✅ Read the main curriculum: `AGENTIC_AI_CURRICULUM.md`
 2. ✅ Set up your environment: `Unit 2`
-3. ✅ Run your first example: `python sample_codes/unit_01_introduction.py`
+3. ✅ Run your first example: `python python/sample_codes/unit_01_introduction.py`
 4. ✅ Start learning!
 
 **Happy Learning! 🎉**
