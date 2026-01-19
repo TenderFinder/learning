@@ -66,10 +66,22 @@ python sample_codes/unit_01_introduction.py
 ```
 
 **Non-Technical Track (10 minutes)**:
-1. Download n8n Desktop → https://n8n.io/download
+
+**Option 1: n8n Cloud (Recommended for Beginners)**
+1. Sign up at https://n8n.cloud (free tier available)
 2. Download Ollama → https://ollama.ai
 3. Open `n8n/README.md` for guided setup
 4. Import your first workflow!
+
+**Option 2: Self-Hosted**
+```bash
+# Using npx (requires Node.js)
+npx n8n
+# Access at http://localhost:5678
+
+# Or using Docker
+docker run -it --rm --name n8n -p 5678:5678 n8nio/n8n
+```
 
 ### Step 3: Start Learning
 

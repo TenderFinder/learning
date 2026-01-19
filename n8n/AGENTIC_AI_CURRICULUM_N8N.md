@@ -67,7 +67,7 @@ By the end of this course, you will be able to:
    - Fixed → Adaptive responses
 
 **Hands-on**:
-- Install n8n (desktop or cloud)
+- Set up n8n (cloud sign-up or npx n8n)
 - Connect to Ollama
 - Create your first "Hello World" AI workflow
 - Test with a simple chatbot
@@ -90,8 +90,8 @@ By the end of this course, you will be able to:
 
 **Topics**:
 1. **n8n Installation Options**
-   - Desktop app (easiest for beginners)
-   - Cloud version (n8n.cloud)
+   - Cloud version (easiest - n8n.cloud)
+   - Self-hosted with npx (requires Node.js)
    - Docker (with help from tech team)
    
 2. **Connecting to Ollama**
@@ -113,7 +113,7 @@ By the end of this course, you will be able to:
    - See results in real-time
 
 **Hands-on**:
-- Install n8n desktop app
+- Set up n8n (cloud or self-hosted)
 - Connect to Ollama
 - Create 3 simple workflows:
   - Text completion
@@ -695,7 +695,7 @@ By the end, you should be able to:
 ## 🛠️ Tools Required
 
 ### Must Have:
-- **n8n** (desktop app or cloud account)
+- **n8n** (cloud account at n8n.cloud or self-hosted)
 - **Ollama** (or use cloud AI - OpenAI, Anthropic)
 - **Web browser**
 - **Email account** (for testing)
@@ -749,7 +749,7 @@ By the end, you should be able to:
 ## 🚀 Getting Started
 
 ### Week 0: Pre-Course Setup
-1. Install n8n desktop
+1. Sign up for n8n Cloud (https://n8n.cloud) OR install locally with npx
 2. Install Ollama
 3. Test connection
 4. Complete "Hello World" workflow

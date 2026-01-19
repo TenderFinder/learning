@@ -113,10 +113,20 @@ python sample_codes/unit_01_introduction.py
 <details>
 <summary>🎨 <b>I'm Non-Technical</b> (Click to expand)</summary>
 
-**Step 1**: Download n8n Desktop → https://n8n.io/download  
-**Step 2**: Download Ollama → https://ollama.ai  
-**Step 3**: Open `n8n/README.md` in this repository  
-**Step 4**: Follow the guided setup (takes 10 minutes!)  
+**Option 1: n8n Cloud (Easiest)**  
+1. Sign up at https://n8n.cloud (free tier available)
+2. Download Ollama → https://ollama.ai  
+3. Open `n8n/README.md` in this repository
+4. Follow the guided setup
+
+**Option 2: Self-Hosted (More Control)**  
+```bash
+# Using npx (requires Node.js)
+npx n8n
+
+# Or using Docker
+docker run -it --rm --name n8n -p 5678:5678 n8nio/n8n
+```
 
 **Next**: Build your first AI workflow in 15 minutes
 

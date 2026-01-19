@@ -55,22 +55,38 @@ non_technical/
 
 ## 🚀 Quick Start (3 Steps)
 
-### Step 1: Install n8n (10 minutes)
+### Step 1: Install n8n (5-10 minutes)
 
-**Option A: Desktop App (Easiest)**
+**Option A: Cloud Version (Easiest - Recommended)**
+```
+1. Sign up at https://n8n.cloud
+2. Free tier available - perfect for learning
+3. No installation needed!
+4. Works from any browser
+```
+
+**Option B: Self-Hosted with npx**
 ```bash
-# Download from:
-https://n8n.io/download
+# Requires Node.js installed
+npx n8n
 
-# Install and open
-# No terminal needed!
+# Access n8n at http://localhost:5678
+# Press Ctrl+C to stop when done
 ```
 
-**Option B: Cloud Version**
+**Option C: Docker (Most Flexible)**
+```bash
+docker run -it --rm \
+  --name n8n \
+  -p 5678:5678 \
+  n8nio/n8n
+  
+# Access n8n at http://localhost:5678
 ```
-Sign up at: https://n8n.cloud
-Free tier available!
-```
+
+**Choose Option A if**: You want the easiest setup  
+**Choose Option B if**: You have Node.js installed  
+**Choose Option C if**: You use Docker regularly
 
 ### Step 2: Install Ollama (5 minutes)
 
