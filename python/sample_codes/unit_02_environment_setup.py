@@ -8,6 +8,7 @@ This file contains setup verification and configuration examples.
 import sys
 import subprocess
 import importlib.metadata
+import config
 
 # ============================================================================
 # Example 1: Environment Verification
@@ -132,8 +133,8 @@ def example_4_langchain_ollama():
         print("\nAttempting to connect to Ollama with LangChain...")
         
         llm = Ollama(
-            model="llama3",
-            temperature=0.7,
+            model=config.ALTERNATIVE_LLM_MODEL,
+            temperature=config.CREATIVE_TEMPERATURE,
             base_url="http://localhost:11434"
         )
         
@@ -172,7 +173,7 @@ def example_5_llamaindex_ollama():
         
         print("\nInitializing LlamaIndex with Ollama...")
         
-        llm = Ollama(model="llama3", request_timeout=60.0)
+        llm = Ollama(model=config.ALTERNATIVE_LLM_MODEL, request_timeout=config.DEFAULT_TIMEOUT)
         
         messages = [
             ChatMessage(role="system", content="You are a helpful assistant."),
@@ -213,7 +214,7 @@ def example_6_test_embeddings():
         print("Model: nomic-embed-text")
         
         embed_model = OllamaEmbedding(
-            model_name="nomic-embed-text",
+            model_name=config.EMBEDDING_MODEL,
             base_url="http://localhost:11434"
         )
         
@@ -250,7 +251,7 @@ def example_7_benchmark():
         from langchain_community.llms import Ollama
         import time
         
-        models_to_test = ["llama3", "mistral", "phi3"]
+        models_to_test = config.get_comparison_models()
         prompt = "What is 2+2? Answer in one word."
         
         print("\nBenchmarking models with prompt:", prompt)
@@ -397,7 +398,7 @@ def example_9_complete_verification():
     # Check LangChain
     try:
         from langchain_community.llms import Ollama
-        llm = Ollama(model="llama3")
+        llm = Ollama(model=config.ALTERNATIVE_LLM_MODEL)
         llm.invoke("test")
         checks["LangChain Integration"] = True
     except:
@@ -406,7 +407,7 @@ def example_9_complete_verification():
     # Check LlamaIndex
     try:
         from llama_index.llms.ollama import Ollama
-        llm = Ollama(model="llama3")
+        llm = Ollama(model=config.ALTERNATIVE_LLM_MODEL)
         checks["LlamaIndex Integration"] = True
     except:
         pass
@@ -414,7 +415,7 @@ def example_9_complete_verification():
     # Check embeddings
     try:
         from llama_index.embeddings.ollama import OllamaEmbedding
-        embed = OllamaEmbedding(model_name="nomic-embed-text")
+        embed = OllamaEmbedding(model_name=config.EMBEDDING_MODEL)
         checks["Embedding Model"] = True
     except:
         pass

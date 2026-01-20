@@ -6,15 +6,16 @@ Complete version with all memory types and advanced patterns.
 """
 
 from langchain_community.llms import Ollama
-from langchain.prompts import PromptTemplate
-from langchain.chains import LLMChain, ConversationChain
-from langchain.memory import (
+from langchain_core.prompts import PromptTemplate
+from langchain_classic.chains import LLMChain, ConversationChain
+from langchain_classic.memory import (
     ConversationBufferMemory,
     ConversationSummaryMemory,
     ConversationBufferWindowMemory
 )
+import config
 
-llm = Ollama(model="llama3", temperature=0.7)
+llm = Ollama(model=config.ALTERNATIVE_LLM_MODEL, temperature=config.CREATIVE_TEMPERATURE)
 
 # ============================================================================
 # Example 6: ConversationBufferMemory (Complete)

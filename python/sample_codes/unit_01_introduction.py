@@ -10,6 +10,10 @@ This file contains working examples for Unit 1 concepts.
 # ============================================================================
 
 from langchain_community.llms import Ollama
+import config
+
+# Models to test - imported from config.py
+models = config.get_comparison_models()
 
 def example_1_basic_ollama():
     """
@@ -17,14 +21,14 @@ def example_1_basic_ollama():
     
     Prerequisites:
     - Ollama installed and running
-    - llama3 model pulled (ollama pull llama3)
+    - deepseek-r1:8b model pulled (ollama pull deepseek-r1:8b)
     """
     print("=" * 60)
     print("Example 1: Basic Ollama Interaction")
     print("=" * 60)
     
-    # Initialize Ollama with llama3 model
-    llm = Ollama(model="llama3", temperature=0.7)
+    # Initialize Ollama with primary model from config
+    llm = Ollama(model=config.PRIMARY_LLM_MODEL, temperature=config.CREATIVE_TEMPERATURE)
     
     # Simple query
     prompt = "Explain what an AI agent is in one sentence."
@@ -39,7 +43,7 @@ def example_1_basic_ollama():
 # Example 2: Understanding Agent Components - Tool Use
 # ============================================================================
 
-from langchain.agents import tool
+from langchain_core.tools import tool
 
 @tool
 def calculator(expression: str) -> str:
@@ -88,8 +92,8 @@ def example_2_tools():
 # Example 3: Memory Systems - Conversation History
 # ============================================================================
 
-from langchain.memory import ConversationBufferMemory
-from langchain.chains import ConversationChain
+from langchain_classic.memory import ConversationBufferMemory
+from langchain_classic.chains import ConversationChain
 
 def example_3_memory():
     """
@@ -99,7 +103,7 @@ def example_3_memory():
     print("Example 3: Memory System")
     print("=" * 60)
     
-    llm = Ollama(model="llama3", temperature=0.7)
+    llm = Ollama(model=config.PRIMARY_LLM_MODEL, temperature=config.CREATIVE_TEMPERATURE)
     
     # Create a conversation chain with memory
     memory = ConversationBufferMemory()
@@ -137,7 +141,7 @@ def example_4_agent_loop():
     print("Example 4: Agent Reasoning Loop")
     print("=" * 60)
     
-    llm = Ollama(model="llama3", temperature=0.3)
+    llm = Ollama(model=config.PRIMARY_LLM_MODEL, temperature=config.PRECISE_TEMPERATURE)
     
     # Simulate an agent solving a problem
     task = "What is 25 * 4?"
@@ -179,7 +183,7 @@ def example_5_use_cases():
     print("Example 5: Agent Use Case Patterns")
     print("=" * 60)
     
-    llm = Ollama(model="llama3", temperature=0.7)
+    llm = Ollama(model=config.PRIMARY_LLM_MODEL, temperature=config.CREATIVE_TEMPERATURE)
     
     # Use Case 1: Customer Service Agent
     print("\n--- Use Case 1: Customer Service ---")
@@ -230,15 +234,13 @@ def example_6_model_comparison():
     Compare responses from different models for the same task.
     
     Prerequisites:
-    - Multiple models pulled (llama3, mistral, phi3)
+    - Multiple models pulled (deepseek-r1:8b, llama2-uncensored, lama3-groq-tool-use3)
     """
     print("=" * 60)
     print("Example 6: Model Comparison")
     print("=" * 60)
     
     prompt = "Explain the concept of 'agent autonomy' in 20 words or less."
-    
-    models = ["llama3", "mistral", "phi3"]
     
     for model_name in models:
         try:
@@ -265,7 +267,7 @@ def example_7_planning():
     print("Example 7: Agent Planning")
     print("=" * 60)
     
-    llm = Ollama(model="llama3", temperature=0.3)
+    llm = Ollama(model=config.PRIMARY_LLM_MODEL, temperature=config.PRECISE_TEMPERATURE)
     
     complex_task = """Plan a birthday party for 20 people this weekend."""
     
@@ -293,7 +295,7 @@ def example_8_feedback():
     print("Example 8: Feedback and Self-Correction")
     print("=" * 60)
     
-    llm = Ollama(model="llama3", temperature=0.7)
+    llm = Ollama(model=config.PRIMARY_LLM_MODEL, temperature=config.CREATIVE_TEMPERATURE)
     
     # Initial attempt
     print("\n--- Initial Attempt ---")
@@ -331,9 +333,9 @@ if __name__ == "__main__":
     print("=" * 60 + "\n")
     
     print("NOTE: Make sure Ollama is running and you have pulled the required models:")
-    print("  ollama pull llama3")
-    print("  ollama pull mistral")
-    print("  ollama pull phi3")
+    print("  ollama pull deepseek-r1:8b")
+    print("  ollama pull llama2-uncensored")
+    print("  ollama pull lama3-groq-tool-use3")
     print("\n")
     
     try:
@@ -363,4 +365,4 @@ if __name__ == "__main__":
         print("\nMake sure:")
         print("1. Ollama is running (check with: ollama list)")
         print("2. Required packages are installed (pip install langchain langchain-community)")
-        print("3. At least one model is pulled (ollama pull llama3)")
+        print("3. At least one model is pulled (ollama pull deepseek-r1:8b)")

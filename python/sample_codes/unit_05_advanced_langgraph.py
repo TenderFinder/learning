@@ -9,8 +9,9 @@ tool integration, and human-in-the-loop workflows.
 from typing import TypedDict, Annotated, Literal
 from langgraph.graph import StateGraph, END
 from langchain_community.llms import Ollama
-from langchain.agents import tool
+from langchain_core.tools import tool
 import operator
+import config
 
 # ============================================================================
 # Example 1: Tool Integration in LangGraph
@@ -89,7 +90,7 @@ def calculate_node(state: ToolAgentState) -> ToolAgentState:
 
 def answer_node(state: ToolAgentState) -> ToolAgentState:
     """Generate final answer using LLM."""
-    llm = Ollama(model="llama3", temperature=0.7)
+    llm = Ollama(model=config.ALTERNATIVE_LLM_MODEL, temperature=config.CREATIVE_TEMPERATURE)
     
     context = "\n".join(state["messages"])
     prompt = f"""Based on this information:
@@ -179,7 +180,7 @@ class MultiAgentState(TypedDict):
 
 def researcher_agent(state: MultiAgentState) -> MultiAgentState:
     """Research agent gathers information."""
-    llm = Ollama(model="llama3", temperature=0.3)
+    llm = Ollama(model=config.ALTERNATIVE_LLM_MODEL, temperature=config.PRECISE_TEMPERATURE)
     
     prompt = f"""You are a research agent. Research this topic: {state['task']}
     
@@ -198,7 +199,7 @@ Provide 3-4 key facts or insights."""
 
 def writer_agent(state: MultiAgentState) -> MultiAgentState:
     """Writer agent creates content."""
-    llm = Ollama(model="llama3", temperature=0.7)
+    llm = Ollama(model=config.ALTERNATIVE_LLM_MODEL, temperature=config.CREATIVE_TEMPERATURE)
     
     prompt = f"""You are a writer. Based on this research:
 
@@ -219,7 +220,7 @@ Write a short article about: {state['task']}"""
 
 def editor_agent(state: MultiAgentState) -> MultiAgentState:
     """Editor agent reviews and improves."""
-    llm = Ollama(model="llama3", temperature=0.5)
+    llm = Ollama(model=config.ALTERNATIVE_LLM_MODEL, temperature=config.BALANCED_TEMPERATURE)
     
     prompt = f"""You are an editor. Review and improve this article:
 
@@ -296,7 +297,7 @@ class HITLState(TypedDict):
 
 def generate_content(state: HITLState) -> HITLState:
     """Generate initial content."""
-    llm = Ollama(model="llama3", temperature=0.7)
+    llm = Ollama(model=config.ALTERNATIVE_LLM_MODEL, temperature=config.CREATIVE_TEMPERATURE)
     
     content = llm.invoke("Write a short introduction to LangGraph")
     
@@ -325,7 +326,7 @@ def review_checkpoint(state: HITLState) -> Literal["revise", "approve"]:
 
 def revise_content(state: HITLState) -> HITLState:
     """Revise based on feedback."""
-    llm = Ollama(model="llama3", temperature=0.7)
+    llm = Ollama(model=config.ALTERNATIVE_LLM_MODEL, temperature=config.CREATIVE_TEMPERATURE)
     
     prompt = f"""Revise this content based on feedback:
 

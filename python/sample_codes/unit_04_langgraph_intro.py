@@ -256,6 +256,7 @@ def example_4_loops():
 # ============================================================================
 
 from langchain_community.llms import Ollama
+import config
 
 class AgentState(TypedDict):
     messages: Annotated[list, operator.add]
@@ -265,7 +266,7 @@ class AgentState(TypedDict):
 
 def llm_node(state: AgentState) -> AgentState:
     """Node that calls LLM."""
-    llm = Ollama(model="llama3", temperature=0.7)
+    llm = Ollama(model=config.ALTERNATIVE_LLM_MODEL, temperature=config.CREATIVE_TEMPERATURE)
     
     question = state["question"]
     response = llm.invoke(f"Answer this question briefly: {question}")
@@ -320,7 +321,7 @@ class ReasoningState(TypedDict):
 
 def plan_node(state: ReasoningState) -> ReasoningState:
     """Create a plan for the task."""
-    llm = Ollama(model="llama3", temperature=0.3)
+    llm = Ollama(model=config.ALTERNATIVE_LLM_MODEL, temperature=config.PRECISE_TEMPERATURE)
     
     task = state["task"]
     plan = llm.invoke(f"Create a step-by-step plan to: {task}")
@@ -335,7 +336,7 @@ def plan_node(state: ReasoningState) -> ReasoningState:
 
 def execute_node(state: ReasoningState) -> ReasoningState:
     """Execute the plan."""
-    llm = Ollama(model="llama3", temperature=0.3)
+    llm = Ollama(model=config.ALTERNATIVE_LLM_MODEL, temperature=config.PRECISE_TEMPERATURE)
     
     execution = llm.invoke(f"Execute this plan:\n{state['plan']}")
     
@@ -349,7 +350,7 @@ def execute_node(state: ReasoningState) -> ReasoningState:
 
 def summarize_node(state: ReasoningState) -> ReasoningState:
     """Summarize the result."""
-    llm = Ollama(model="llama3", temperature=0.3)
+    llm = Ollama(model=config.ALTERNATIVE_LLM_MODEL, temperature=config.PRECISE_TEMPERATURE)
     
     result = llm.invoke(f"Summarize the outcome:\n{state['execution']}")
     

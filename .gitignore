@@ -11,3 +11,8 @@ python/venv/
 # Instructor Guides (Solutions)
 python/instructor_guide/
 n8n/instructor_guide/
+
+# virtual environment
+agentic-ai-env/
+.venv/
+venv/

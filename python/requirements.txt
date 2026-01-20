@@ -1,0 +1,66 @@
+# Agentic AI Course - Python Track Dependencies
+# Install with: pip install -r requirements.txt
+
+# ============================================================
+# Core LangChain Packages
+# ============================================================
+langchain>=0.1.0
+langchain-community>=0.0.20
+langchain-core>=0.1.0
+
+# ============================================================
+# LangGraph (Stateful Agent Workflows)
+# ============================================================
+langgraph>=0.0.20
+
+# ============================================================
+# LlamaIndex (RAG and Document Indexing)
+# ============================================================
+llama-index>=0.10.0
+llama-index-llms-ollama>=0.1.0
+llama-index-embeddings-ollama>=0.1.0
+
+# ============================================================
+# Vector Stores
+# ============================================================
+chromadb>=0.4.0
+faiss-cpu>=1.7.4
+
+# For GPU support, use instead:
+# faiss-gpu>=1.7.4
+
+# ============================================================
+# Utilities
+# ============================================================
+python-dotenv>=1.0.0
+
+# ============================================================
+# Optional (Recommended for Development)
+# ============================================================
+jupyter>=1.0.0
+ipython>=8.0.0
+requests>=2.31.0
+
+# ============================================================
+# Installation Instructions
+# ============================================================
+# 1. Create virtual environment:
+#    python3 -m venv agentic-ai-env
+#    source agentic-ai-env/bin/activate  # On Windows: agentic-ai-env\Scripts\activate
+#
+# 2. Install dependencies:
+#    pip install -r requirements.txt
+#
+# 3. Install Ollama:
+#    Mac: brew install ollama
+#    Linux: curl https://ollama.ai/install.sh | sh
+#    Windows: Download from https://ollama.ai
+#
+# 4. Pull required models:
+#    ollama pull deepseek-r1:8b
+#    ollama pull llama2-uncensored
+#    ollama pull llama3-groq-tool-use
+#    ollama pull nomic-embed-text  # For RAG/embeddings
+#
+# 5. Verify installation:
+#    python sample_codes/unit_02_environment_setup.py

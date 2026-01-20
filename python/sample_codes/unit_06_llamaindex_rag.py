@@ -15,6 +15,7 @@ from llama_index.llms.ollama import Ollama
 from llama_index.embeddings.ollama import OllamaEmbedding
 import os
 import tempfile
+import config
 
 # ============================================================================
 # Setup: Configure LlamaIndex to use Ollama
@@ -23,10 +24,10 @@ import tempfile
 def setup_llamaindex():
     """Configure LlamaIndex to use local Ollama models."""
     # Set up LLM
-    Settings.llm = Ollama(model="llama3", request_timeout=120.0)
+    Settings.llm = Ollama(model=config.ALTERNATIVE_LLM_MODEL, request_timeout=config.EXTENDED_TIMEOUT)
     
     # Set up embeddings
-    Settings.embed_model = OllamaEmbedding(model_name="nomic-embed-text")
+    Settings.embed_model = OllamaEmbedding(model_name=config.EMBEDDING_MODEL)
     
     print("✅ LlamaIndex configured to use Ollama")
 
@@ -314,7 +315,7 @@ This is especially useful for long-form content generation.
     index = VectorStoreIndex.from_documents(documents)
     query_engine = index.as_query_engine(streaming=True)
     
-   question = "Explain streaming responses"
+    question = "Explain streaming responses"
     print(f"\n--- Question: {question} ---")
     print("Answer (streaming): ", end="", flush=True)
     

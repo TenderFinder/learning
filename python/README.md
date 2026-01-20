@@ -33,6 +33,7 @@ By the end of this course, you'll be able to:
 ```
 python/
 ├── sample_codes/
+│   ├── config.py                          ⭐ Model configuration (NEW!)
 │   ├── unit_01_introduction.py           ⭐ 8 examples
 │   ├── unit_02_environment_setup.py      9 examples
 │   ├── unit_03_langchain_fundamentals.py 10 examples
@@ -59,6 +60,183 @@ python/
 │
 └── README.md                              This file!
 ```
+
+---
+
+## ⚙️ Model Configuration (Change Models in ONE Place!)
+
+### 🎯 **NEW**: Centralized Model Management
+
+All sample code files now use a **centralized configuration file** (`sample_codes/config.py`) for model names. **Change models in ONE place** instead of editing 28 locations across 6 files!
+
+#### **Quick Configuration**
+
+**1. Edit**: `sample_codes/config.py`
+```python
+# Primary LLM model (used in Unit 1)
+PRIMARY_LLM_MODEL = "deepseek-r1:8b"  # ← Change this!
+
+# Alternative LLM model (used in Units 3-6)
+ALTERNATIVE_LLM_MODEL = "llama3"  # ← Change this!
+
+# Embedding model for RAG
+EMBEDDING_MODEL = "nomic-embed-text"  # ← Change this!
+
+# Models for comparison/benchmarking
+COMPARISON_MODELS = [
+    "llama2-uncensored",
+    "deepseek-r1:8b", 
+    "llama3-groq-tool-use"
+]
+```
+
+**2. Pull Models**:
+```bash
+ollama pull deepseek-r1:8b
+ollama pull llama3
+ollama pull nomic-embed-text
+```
+
+**3. Verify Configuration**:
+```bash
+cd sample_codes
+python config.py
+```
+
+**Expected Output**:
+```
+============================================================
+Current Model Configuration
+============================================================
+Primary LLM Model:     deepseek-r1:8b
+Alternative LLM Model: llama3
+Embedding Model:       nomic-embed-text
+Comparison Models:     llama2-uncensored, deepseek-r1:8b, llama3-groq-tool-use
+============================================================
+
+✅ All configured models are available!
+```
+
+**4. Run Any Example** - they all use your configuration!
+
+#### **Configuration Architecture**
+
+```
+┌─────────────────────────────────┐
+│      config.py                  │
+│  (ONE PLACE TO EDIT!)          │
+│  • PRIMARY_LLM_MODEL            │
+│  • ALTERNATIVE_LLM_MODEL        │
+│  • EMBEDDING_MODEL              │
+│  • COMPARISON_MODELS            │
+└────────────┬────────────────────┘
+             │ import config
+    ┌────────┴───────┬─────────┬─────────┬─────────┬─────────┐
+    ▼                ▼         ▼         ▼         ▼         ▼
+unit_01.py      unit_02.py  unit_03.py unit_04.py unit_05.py unit_06.py
+```
+
+#### **Model Usage by File**
+
+| File | Primary Model | Also Uses |
+|------|--------------|-----------|
+| `unit_01_introduction.py` | PRIMARY_LLM_MODEL | COMPARISON_MODELS |
+| `unit_02_environment_setup.py` | ALTERNATIVE_LLM_MODEL | EMBEDDING_MODEL, COMPARISON_MODELS |
+| `unit_03_langchain_fundamentals.py` | ALTERNATIVE_LLM_MODEL | - |
+| `unit_04_langgraph_intro.py` | ALTERNATIVE_LLM_MODEL | - |
+| `unit_05_advanced_langgraph.py` | ALTERNATIVE_LLM_MODEL | - |
+| `unit_06_llamaindex_rag.py` | ALTERNATIVE_LLM_MODEL | EMBEDDING_MODEL |
+
+#### **Example: Switch All to Mistral**
+
+```bash
+# 1. Edit ONE line in config.py
+#    ALTERNATIVE_LLM_MODEL = "mistral"
+
+# 2. Pull the model
+ollama pull mistral
+
+# 3. Verify
+cd sample_codes && python config.py
+
+# 4. Run examples - all now use Mistral!
+python unit_03_langchain_fundamentals.py
+python unit_04_langgraph_intro.py
+python unit_05_advanced_langgraph.py
+python unit_06_llamaindex_rag.py
+```
+
+#### **Available Configuration Variables**
+
+**Models**:
+- `PRIMARY_LLM_MODEL` - Main model for Unit 1
+- `ALTERNATIVE_LLM_MODEL` - Model for Units 3-6  
+- `EMBEDDING_MODEL` - Embedding model for RAG/vectors
+- `COMPARISON_MODELS` - List for benchmarking
+
+**Temperature Settings**:
+- `CREATIVE_TEMPERATURE = 0.7` - For creative tasks
+- `PRECISE_TEMPERATURE = 0.3` - For precise tasks
+- `BALANCED_TEMPERATURE = 0.5` - For balanced tasks
+
+**Timeouts**:
+- `DEFAULT_TIMEOUT = 60.0` - Standard timeout (seconds)
+- `EXTENDED_TIMEOUT = 120.0` - Extended timeout (seconds)
+
+**Helper Functions**:
+```python
+import config
+
+# Get model names
+config.get_primary_model()        # Returns PRIMARY_LLM_MODEL
+config.get_alternative_model()    # Returns ALTERNATIVE_LLM_MODEL
+config.get_embedding_model()      # Returns EMBEDDING_MODEL
+config.get_comparison_models()    # Returns list
+
+# Utilities
+config.print_config()     # Display current configuration
+config.validate_models()  # Check if models are available
+```
+
+#### **Benefits**
+
+✅ **Change Once, Apply Everywhere**: Edit 1 file instead of 28 places  
+✅ **Fast Experimentation**: Try different models in seconds  
+✅ **Built-in Validation**: Check if models are available  
+✅ **No Typos**: Constants prevent mistakes  
+✅ **Easy Maintenance**: One source of truth
+
+#### **Before vs After**
+
+**BEFORE** (28 places to edit!):
+```python
+# unit_01_introduction.py
+llm = Ollama(model="deepseek-r1:8b", temperature=0.7)
+
+# unit_03_langchain_fundamentals.py  
+llm = Ollama(model="llama3", temperature=0.7)
+
+# ... 26 more places! 😱
+```
+
+**AFTER** (1 place to edit!):
+```python
+# config.py - EDIT HERE
+PRIMARY_LLM_MODEL = "deepseek-r1:8b"
+ALTERNATIVE_LLM_MODEL = "llama3"
+
+# All files automatically use it:
+import config
+llm = Ollama(model=config.PRIMARY_LLM_MODEL, ...)
+```
+
+#### **Tips**
+
+💡 **Keep models consistent** across examples for easier learning  
+💡 **Smaller models** (phi3) are faster but less capable  
+💡 **Larger models** (llama3:70b) are better but slower  
+💡 **Always verify** with `python config.py` after changes  
+💡 **Can override** per-file if needed: `config.PRIMARY_LLM_MODEL = "custom"`
 
 ---
 
