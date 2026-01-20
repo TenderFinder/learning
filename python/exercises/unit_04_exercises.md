@@ -12,28 +12,46 @@
 
 **Objective**: Create your first LangGraph state machine.
 
-**Tasks**:
-Build a simple order processing workflow:
-1. States: received → validated → processed → shipped
-2. Each state updates a status message
-3. Track timestamps for each state
+**What You'll Build**:
+A linear workflow tracking an order status with timestamps.
 
-**State Schema**:
-```python
-class OrderState(TypedDict):
-    order_id: str
-    status: str
-    timestamps: Annotated[list, operator.add]
-    messages: Annotated[list, operator.add]
-```
+**Steps**:
+1. **Define State**:
+   - `class OrderState(TypedDict)`:
+     - `order_id`: str
+     - `status`: str
+     - `timestamps`: Annotated[list, operator.add]
+     - `messages`: Annotated[list, add_messages]
+
+2. **Define Nodes**:
+   - Python functions that take `OrderState` and return a dictionary of updates.
+   - `received(state)`: returns `{"status": "Received", "timestamps": [now()]}`.
+   - `validated(state)`: returns `{"status": "Validated", ...}`.
+   - `processed(state)`: ...
+   - `shipped(state)`: ...
+
+3. **Build Graph**:
+   - `builder = StateGraph(OrderState)`
+   - `builder.add_node("received", received)`
+   - ... repeat for all.
+
+4. **Add Edges**:
+   - `builder.set_entry_point("received")`
+   - `builder.add_edge("received", "validated")`
+   - `builder.add_edge("validated", "processed")`
+   - ...
+   - `builder.add_edge("shipped", END)`
+
+5. **Run**:
+   - `graph = builder.compile()`
+   - `graph.invoke({"order_id": "123", "timestamps": [], "messages": []})`
 
 **Expected Output**:
 ```
 Order #12345 Processing:
   [10:00:00] Received
   [10:00:01] Validated
-  [10:00:02] Processed
-  [10:00:03] Shipped
+  ...
 Status: Complete
 ```
 
@@ -43,23 +61,37 @@ Status: Complete
 
 **Objective**: Implement complex conditional logic.
 
-**Tasks**:
-Build a content moderation system:
-1. Input: user-generated content
-2. Check for:
-   - Explicit language → flag_explicit
-   - Spam patterns → flag_spam
-   - Normal content → approve
-3. Flagged content goes through review
-4. Approved content is published
+**What You'll Build**:
+A content moderation workflow that routes inputs based on content analysis.
 
-**Routing Logic**:
-```
-check_content → (explicit | spam | clean)
-  ├─ explicit → review → (approve | reject)
-  ├─ spam → review → (approve | reject)
-  └─ clean → publish
-```
+**Steps**:
+1. **Define State**:
+   - `content`: str
+   - `classification`: str
+   - `status`: str
+
+2. **Define Nodes**:
+   - `classify_content(state)`: Returns `{"classification": "spam" | "explicit" | "clean"}`.
+   - `human_review_node(state)`: Returns `{"status": "approved" | "rejected"}`.
+   - `publish_node(state)`: Returns `{"status": "published"}`.
+
+3. **Define Router**:
+   - Function `route_content(state)`:
+     - if classification == "clean" return "publish"
+     - else return "review"
+
+4. **Build Graph**:
+   - Add nodes: `classify`, `review`, `publish`.
+   - Entry: `classify`.
+   - Conditional Edge:
+     - `builder.add_conditional_edges("classify", route_content, {"publish": "publish", "review": "review"})`.
+   - Normal Edges:
+     - `review` -> END (or publish).
+     - `publish` -> END.
+
+5. **Test**:
+   - Input: "Buy cheap meds now!" -> Should go to review.
+   - Input: "Hello world" -> Should go to publish.
 
 ---
 
@@ -67,19 +99,41 @@ check_content → (explicit | spam | clean)
 
 **Objective**: Build a graph with controlled loops.
 
-**Tasks**:
-Create a "learning loop" that:
-1. Presents a problem
-2. Gets student answer
-3. Checks if correct
-4. If wrong, provides hint and loops back (max 3 attempts)
-5. If correct or max attempts reached, moves to next problem
+**What You'll Build**:
+A math tutor that gives you 3 tries to solve a problem.
 
-**Test with math problems**:
+**Steps**:
+1. **Define State**:
+   - `problem`: str
+   - `answer`: str
+   - `attempts`: int
+   - `solved`: bool
+
+2. **Nodes**:
+   - `present_problem`: Prints problem (if attempts==0).
+   - `evaluate_answer`: Checks answer. Returns `{"solved": True/False, "attempts": state["attempts"] + 1}`.
+
+3. **Router**:
+   - `check_progress(state)`:
+     - If `solved`: return "end"
+     - If `attempts` >= 3: return "end" (failed)
+     - Else: return "retry"
+
+4. **Graph Construction**:
+   - Nodes: `ask` (Entry), `evaluate`.
+   - Edge: `ask` -> `evaluate`.
+   - Conditional Edge from `evaluate`:
+     - `check_progress` -> {"retry": "ask", "end": END}.
+
+5. **Execution**:
+   - Manually simulate "user input" inside the `evaluate` node for this exercise (or use `input()` function).
+
+**Expected Output**:
 ```
-Problem 1: What is 7 * 8?
-Problem 2: What is sqrt(144)?
-Problem 3: What is 15 + 27?
+Problem: 7 * 8?
+Attempt 1: 54 (Wrong)
+Attempt 2: 56 (Correct)
+Transitions: ask -> eval -> ask -> eval -> END.
 ```
 
 ---
@@ -88,17 +142,38 @@ Problem 3: What is 15 + 27?
 
 **Objective**: Build a sophisticated reasoning workflow.
 
-**Tasks**:
-Create a research assistant that:
-1. Takes a complex question
-2. Breaks it into sub-questions (planning)
-3. Researches each sub-question
-4. Checks if answer is sufficient
-   - If yes → synthesize final answer
-   - If no → generate more sub-questions (loop)
-5. Returns comprehensive answer with sources
+**What You'll Build**:
+A "Plan-and-Execute" style agent that researches complex topics.
 
-**Max iterations**: 3 research loops
+**Steps**:
+1. **State**:
+   - `question`: str
+   - `plan`: list[str] (steps)
+   - `current_step`: int
+   - `findings`: list[str]
+
+2. **Planner Node**:
+   - Uses LLM to generate a list of steps for the `question`.
+   - Update `plan` in state.
+
+3. **Executor Node**:
+   - Takes `plan[current_step]`.
+   - Simulates research (or uses a tool).
+   - Updates `findings`.
+   - Increments `current_step`.
+
+4. **Router**:
+   - If `current_step` < `len(plan)`: return "continue".
+   - Else: return "synthesize".
+
+5. **Synthesizer Node**:
+   - Uses LLM to combine `findings` into final answer.
+
+6. **Graph**:
+   - `planner` -> `executor` -> (conditional) -> `synthesizer` -> END.
+   - The conditional edge loops back to `executor` if "continue".
+
+**Result**: A powerful agent that breaks down "Who is the CEO of the company that made ChatGPT?" into [Find Company -> OpenAI, Find CEO -> Sam Altman].
 
 ---
 
@@ -106,93 +181,103 @@ Create a research assistant that:
 
 **Objective**: Implement parallel node execution.
 
-**Tasks**:
-Build a document analyzer that processes a document through parallel paths:
-1. Branch into 3 parallel analyses:
-   - Sentiment analysis
-   - Key entity extraction
-   - Summary generation
-2. Merge results
-3. Generate final report
+**What You'll Build**:
+A document analyzer that processes text through 3 independent paths simultaneously.
 
-**Hint**: Use `add_edge` from multiple nodes to a merger node
+**Steps**:
+1. **State**: `doc_text`, `sentiment`, `entities`, `summary`.
+2. **Nodes**:
+   - `analyze_sentiment`: Updates `sentiment` key.
+   - `extract_entities`: Updates `entities` key.
+   - `summarize_text`: Updates `summary` key.
+3. **Graph Construction**:
+   - `builder.add_node("sentiment", analyze_sentiment)`
+   - `builder.add_node("entities", extract_entities)`
+   - `builder.add_node("summary", summarize_text)`
+   - Entry point: A dummy start node or directly branch from start?
+   - *Better pattern*: Start node -> (Fan out) -> all 3 nodes.
+   - Edges: `start` -> `sentiment`, `start` -> `entities`, `start` -> `summary`.
+   - All 3 nodes -> `end_node` (Fan in).
+4. **Execution**:
+   - Verify that all 3 keys in state are populated after run.
+   - Note: LangGraph executes parallel branches automatically.
+
+**Expected Output**:
+```
+Running parallel nodes...
+Validating state:
+ - Sentiment: Positive
+ - Entities: [Google, AI]
+ - Summary: "The text discusses..."
+Success!
+```
 
 ---
 
 ## Exercise 6: Human-in-the-Loop Workflow (Advanced)
 
-**Objective**: Implement approval workflows.
+**Objective**: Integrate human approval steps.
 
-**Tasks**:
-Create an email drafting assistant:
-1. Generate email draft based on user intent
-2. **Interrupt** for user review
-3. User can:
-   - Approve → send (simulate)
-   - Request changes → regenerate with feedback
-   - Reject → abort
-4. Track revision history
+**What You'll Build**:
+A tweet generator that requires human approval before "posting".
 
-**Bonus**: Implement multi-step approval (manager + legal team)
+**Steps**:
+1. **State**: `topic`, `tweet_draft`, `feedback`.
+2. **Nodes**:
+   - `generate_tweet`: LLM writes draft.
+   - `human_approval`: (No-op node, or just the checkpointer boundary).
+   - `post_tweet`: Print "Posted!".
 
----
+3. **Graph with Checkpoint**:
+   - Enable checkpointing: `memory = MemorySaver()`.
+   - `graph = builder.compile(checkpointer=memory, interrupt_before=["post_tweet"])`.
 
-## Exercise 7: Error Handling and Recovery (Advanced)
+4. **Execution Flow**:
+   - Run graph with configuration `{"configurable": {"thread_id": "1"}}`.
+   - It stops before `post_tweet`.
+   - **User Action**: Inspect state `graph.get_state(config)`.
+   - **Decision**:
+     - If approving: `graph.invoke(None, config)` to continue.
+     - If rejecting: `graph.update_state(config, {"feedback": "Too long!"})` then invoke to rerun generation.
 
-**Objective**: Build robust graphs with error handling.
-
-**Tasks**:
-1. Create a workflow that can fail at any node
-2. Implement:
-   - Try-catch in nodes
-   - Retry logic (max 3 retries)
-   - Fallback paths
-   - Error logging
-3. Test with intentionally failing nodes
-
-**Scenario**: API call workflow that might timeout
+**visualize**:
+- Use `print(graph.get_graph().draw_ascii())`.
 
 ---
 
-## Challenge Project: Multi-Agent Task Planner
+## Challenge Project: Build an RPG Game Engine
 
-**Objective**: Build a complete task planning and execution system.
+**Objective**: Create a text-based RPG using a State Graph.
 
-**Requirements**:
-Create a system that:
-1. Takes a complex project task (e.g., "Plan a conference")
-2. Breaks it into subtasks
-3. Assigns each subtask to a specialized "agent" (node)
-4. Routes based on task type:
-   - Budget tasks → budget_planner
-   - Scheduling → schedule_manager
-   - Communications → communication_agent
-5. Tracks completion status
-6. Handles dependencies (task B needs task A completed)
-7. Generates progress reports
-8. Allows re-planning if tasks fail
+**What You'll Build**:
+A dungeon crawler where each room is a node and player choices determine the path.
 
-**State Schema**:
-```python
-class ProjectState(TypedDict):
-    project_name: str
-    tasks: list[Task]
-    completed_tasks: list[str]
-    current_task: Optional[Task]
-    status: str
-    messages: Annotated[list, operator.add]
-```
+**Steps**:
+1. **State**:
+   - `player_hp`: int
+   - `inventory`: list
+   - `location`: str
+   - `last_message`: str
 
-**Testing**:
-- Test with multi-step projects
-- Simulate task failures
-- Test dependency handling
+2. **Room Nodes**:
+   - Define functions for `entrance`, `hallway`, `treasure_room`, `monster_room`.
+   - Each node should return a description and update state (e.g., add item).
 
-**Bonus Features**:
-- Visual graph representation (use mermaid or graphviz)
-- Persistence (save/load state)
-- Time estimation for tasks
-- Resource allocation
+3. **Conditional Logic (The Map)**:
+   - Create a router function `parse_command(state)` that looks at `last_message` (user input).
+   - Map: "north" -> `hallway`, "fight" -> `combat_graph`.
+
+4. **Combat Subgraph** (Bonus):
+   - A separate graph for fighting logic (Player Attack -> Enemy Attack -> Loop).
+   - Call this subgraph from the `monster_room`.
+
+5. **Loop**:
+   - Use a `while` loop in Python to take `input()` and update the state, driving the graph forward 1 step at a time.
+
+**Success Criteria**:
+- ✅ Player can move between rooms (Graph traversal).
+- ✅ State persists (Inventory items kept).
+- ✅ Game logic handles "Game Over" (HP <= 0).
 
 ---
 
@@ -200,38 +285,17 @@ class ProjectState(TypedDict):
 
 **Objective**: Debug common LangGraph issues.
 
-**Provided**: A broken graph with multiple issues:
-- Infinite loops
-- Missing state updates
-- Incorrect edge conditions
-- State type mismatches
+**Provided**: A broken graph script (you create it) with:
+- An infinite loop (Node A -> Node B -> Node A).
+- A state value that gets overwritten incorrectly.
 
 **Tasks**:
-1. Identify all issues
-2. Fix them
-3. Add proper validation
-4. Explain what was wrong
-
----
-
-## Performance Exercise: Graph Optimization
-
-**Objective**: Optimize graph execution.
-
-**Tasks**:
-1. Create a graph with 10+ nodes
-2. Profile execution time
-3. Identify bottlenecks
-4. Optimize by:
-   - Parallelizing independent nodes
-   - Caching results
-   - Reducing LLM calls
-5. Measure improvement
-
-**Goal**: 50%+ performance improvement
+1. Run the graph and observe the `RecursionLimitError`.
+2. Fix the loop by adding a logic check or max steps.
+3. Fix the state overwrites by changing the reducer to `add_messages` or `operator.add`? (Depends on intent). (Hint: If it's a list, use a reducer!).
 
 ---
 
 **Estimated Time**: 10-12 hours
-**Prerequisites**: Units 1-3 completed  
-**Key Concepts**: States, Nodes, Edges, Conditionals, Loops
+**Prerequisites**: Units 1-3 completed
+**Key Concepts**: States, Nodes, Edges, Conditionals, Loops, Checkpointing

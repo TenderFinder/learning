@@ -12,66 +12,90 @@
 
 **Objective**: Create a simple document Q&A system.
 
-**Tasks**:
-1. Create a folder with 3-5 text files on a topic of your choice
-2. Load documents using SimpleDirectoryReader
-3. Create a VectorStoreIndex
-4. Build a query engine
-5. Test with at least 10 questions
+**What You'll Build**:
+A Python script that ingests a folder of text and answers questions about it.
 
-**Requirements**:
-- Use Ollama for LLM (llama3)
-- Use Ollama for embeddings (nomic-embed-text)
-- Print source documents for each answer
+**Steps**:
+1. **Prepare Data**:
+   - Create a folder `data/` and add `paul_graham_essay.txt` (or any text).
 
-**Example Topics**:
-- Personal notes/documentation
-- Wikipedia articles on a subject
-- Tutorial content
-- Research papers
+2. **Ingest Documents**:
+   - `from llama_index.core import SimpleDirectoryReader`
+   - `documents = SimpleDirectoryReader("./data").load_data()`
 
----
+3. **Index Data**:
+   - `from llama_index.core import VectorStoreIndex`
+   - `index = VectorStoreIndex.from_documents(documents)`
+   - Note: Use `Settings.embed_model = "local:nomic-embed-text"` if using Ollama.
 
-## Exercise 2: Advanced Retrieval Strategies (Intermediate)
+4. **Query Engine**:
+   - `query_engine = index.as_query_engine()`
+   - `response = query_engine.query("What did the author do in college?")`
 
-**Objective**: Compare different retrieval approaches.
+5. **Output**:
+   - Print `response`.
+   - Print `response.source_nodes[0]` to see where the answer came from.
 
-**Tasks**:
-Test the same document set with:
-1. VectorStoreIndex (semantic search)
-2. KeywordTableIndex (keyword search)
-3. Hybrid approach (combine both)
-
-**Compare**:
-- Accuracy of answers
-- Response time
-- Best use cases for each
-
-**Test Questions** (10+):
-- Factual questions
-- Conceptual questions
-- Questions needing context
+**Expected Output**:
+```
+Answer: The author worked on writing and programming...
+Source: .../data/essay.txt (Score: 0.85)
+```
 
 ---
 
-## Exercise 3: Custom Metadata and Filtering (Intermediate)
+## Exercise 2: Hybrid Search (Intermediate)
+
+**Objective**: Improve retrieval by mixing keywords and vectors.
+
+**What You'll Build**:
+A retriever that finds matches using both exact keywords ("Python 3.12") and semantic meaning ("coding language").
+
+**Steps**:
+1. **Setup**:
+   - Install `llama-index-retrievers-bm25`.
+
+2. **Create Indices**:
+   - `vector_index = VectorStoreIndex.from_documents(docs)`
+   - `bm25_retriever = BM25Retriever.from_defaults(docstore=vector_index.docstore, ...)`
+
+3. **Combined Retriever**:
+   - Use `QueryFusionRetriever` (or custom combination).
+   - Retrieve top 5 from Vector, top 5 from BM25.
+   - Re-rank or de-duplicate.
+
+4. **Test Queries**:
+   - "SpecificErrorCode123" (Should be caught by BM25).
+   - "How do I fix a crash?" (Should be caught by Vector).
+
+**Observation**:
+- Notice how some queries work better with one method than the other.
+
+---
+
+## Exercise 3: Metadata Filters (Intermediate)
 
 **Objective**: Use metadata for sophisticated retrieval.
 
-**Tasks**:
-1. Create documents with rich metadata:
-   - Author
-   - Date
-   - Category
-   - Difficulty level
-   - Tags
-2. Implement filtered retrieval:
-   - "Find beginner-level articles about Python"
-   - "Show documents from 2024 about AI"
-   - "Get advanced tutorials tagged 'machine-learning'"
-3. Build a metadata-aware query engine
+**What You'll Build**:
+A search engine that can filter by Year, Author, or Tag.
 
-**Deliverable**: System that can filter by any metadata field
+**Steps**:
+1. **Create Tagged Documents**:
+   - `doc1 = Document(text="...", metadata={"year": 2023, "tag": "AI"})`
+   - `doc2 = Document(text="...", metadata={"year": 2024, "tag": "Crypto"})`
+
+2. **Index**:
+   - Build `VectorStoreIndex` from these documents.
+
+3. **Define Filters**:
+   - `from llama_index.core.vector_stores import MetadataFilters, ExactMatchFilter`
+   - `filters = MetadataFilters(filters=[ExactMatchFilter(key="year", value=2024)])`
+
+4. **Query**:
+   - `engine = index.as_query_engine(filters=filters)`
+   - Ask: "What happened recently?"
+   - Verify it ONLY returns info from doc2.
 
 ---
 
@@ -79,120 +103,52 @@ Test the same document set with:
 
 **Objective**: Build a chat interface for your knowledge base.
 
-**Tasks**:
-1. Create a knowledge base from documentation
-2. Implement chat engine with context
-3. Support multi-turn conversations:
-   - Follow-up questions
-   - Clarifications
-   - Topic switches
-4. Maintain conversation history
-5. Track which documents were referenced
+**What You'll Build**:
+A system that remembers " what you just asked" while looking up documents.
 
-**Example Conversation**:
-```
-User: What is LangGraph?
-Bot: [Answer with sources]
+**Steps**:
+1. **Chat Engine**:
+   - `chat_engine = index.as_chat_engine(chat_mode="context", system_prompt="You are a helpful assistant.")`
 
-User: How does it differ from LangChain?
-Bot: [Contextual answer referencing previous response]
+2. **Conversation Loop**:
+   - `while True:`
+   - `q = input("User: ")`
+   - `response = chat_engine.chat(q)`
+   - `print(response)`
 
-User: Show me an example
-Bot: [Code example from docs]
-```
+3. **Test Context**:
+   - User: "What is the capital of France?" (System finds doc).
+   - Bot: "Paris."
+   - User: "What is the population there?" (System must infer 'there' means 'Paris').
 
 ---
 
-## Exercise 5: Multi-Document Analysis (Advanced)
+## Exercise 5: Agentic RAG (Advanced)
 
-**Objective**: Compare and synthesize information across documents.
+**Objective**: Combine LlamaIndex with LangGraph for agentic retrieval.
 
-**Tasks**:
-Create a system that can:
-1. Compare approaches from different documents
-2. Find contradictions or agreements
-3. Synthesize a comprehensive answer
+**What You'll Build**:
+A LangGraph agent that treats your Vector Store as a **Tool**.
 
-**Example Query**:
-"How do LangChain and LlamaIndex approach memory management? Compare their approaches."
+**Steps**:
+1. **Wrap LlamaIndex as Tool**:
+   - Define a function `query_docs(query: str) -> str`.
+   - Inside, call `query_engine.query(query)`.
+   - Decorate with `@tool`.
 
-**Requirements**:
-- Load docs about both frameworks
-- Retrieve relevant sections from each
-- Generate comparative analysis
-- Cite specific sources
+2. **LangGraph Agent**:
+   - Create a ReAct agent (from Unit 5).
+   - Bind `query_docs` as its only tool.
 
----
+3. **Complex Query**:
+   - Ask: "Compare the revenue of Apple in 2023 vs 2024 based on the docs."
+   - Agent Loop:
+     - 1. Call `query_docs("Apple revenue 2023")`.
+     - 2. Call `query_docs("Apple revenue 2024")`.
+     - 3. Subtract/Compare in Python (or LLM reasoning).
+     - 4. Final Answer.
 
-## Exercise 6: Structured Data Extraction (Advanced)
-
-**Objective**: Extract structured information from unstructured text.
-
-**Tasks**:
-1. Load documents containing information about people, places, or products
-2. Extract structured data:
-   ```python
-   {
-       "name": "...",
-       "description": "...",
-       "key_facts": [...],
-       "related_entities": [...]
-   }
-   ```
-3. Store in a structured format (JSON)
-4. Enable querying the structured data
-
-**Example**: Extract product information from reviews
-
----
-
-## Exercise 7: Citation and Source Tracking (Intermediate)
-
-**Objective**: Build a system with proper citations.
-
-**Tasks**:
-1. Create a RAG system that always includes:
-   - Source document name
-   - Page number (if applicable)
-   - Relevant quote
-   - Confidence score
-2. Format citations properly
-3. Handle multiple sources
-
-**Expected Output Format**:
-```
-Answer: LangGraph is a library for building stateful agents...
-
-Sources:
-[1] langgraph_docs.pdf, p.3, Score: 0.95
-    "LangGraph extends LangChain to enable..."
-
-[2] langchain_blog.txt, Score: 0.87
-    "The key difference is state management..."
-```
-
----
-
-## Exercise 8: Custom Embedding Models (Advanced)
-
-**Objective**: Experiment with different embedding models.
-
-**Tasks**:
-1. Test same documents with different embeddings:
-   - nomic-embed-text
-   - mxbai-embed-large
-   - all-minilm
-2. Compare:
-   - Retrieval accuracy
-   - Speed
-   - index size
-3. Recommend best for different scenarios
-
-**Metrics to track**:
-- Embedding dimension
-- Time to index
-- Time to query
-- Recall @K
+**Success**: The agent makes *multiple* calls to the index to answer a multi-part question.
 
 ---
 
@@ -201,98 +157,16 @@ Sources:
 **Objective**: Build a production-ready personal knowledge system.
 
 **Requirements**:
-1. **Document Ingestion**:
-   - Support multiple formats (PDF, TXT, MD, DOCX)
-   - Automatic metadata extraction
-   - Deduplication
+1. **Supported Formats**: Ingest `.txt`, `.md`, and `.pdf` from a `docs/` folder.
+2. **Persistence**: Save the index to disk (`index.storage_context.persist()`) so you don't rebuild it every time.
+3. **CLI Interface**:
+   - `python kb.py add <file>`
+   - `python kb.py ask "<question>"`
+4. **Citations**: output the filename of the source document with every answer.
+5. **Robustness**: Handle empty query results gracefully ("I couldn't find that info").
 
-2. **Indexing**:
-   - Efficient chunking strategy
-   - Metadata-enhanced indexing
-   - Periodic re-indexing
-
-3. **Querying**:
-   - Natural language queries
-   - Filtered search
-   - Semantic + keyword hybrid
-
-4. **Features**:
-   - Conversational interface
-   - Export answers to format (MD, PDF)
-   - Source highlighting
-   - Related document suggestions
-
-5. **CLI Interface**:
-   ```bash
-   $ kb add document.pdf
-   $ kb search "machine learning basics"
-   $ kb chat
-   $ kb export --query "AI concepts" --format pdf
-   ```
-
-**Bonus Features**:
-- Web interface (Gradio/Streamlit)
-- Auto-tagging with LLM
-- Knowledge graph visualization
-- Spaced repetition for learning
-- Share knowledge bases
-
----
-
-## Advanced Challenge: Agentic RAG System
-
-**Objective**: Combine LlamaIndex with LangGraph for agentic retrieval.
-
-**Tasks**:
-Build a system that:
-1. Analyzes query complexity
-2. Decides retrieval strategy:
-   - Simple query → direct retrieval
-   - Complex query → decompose → multiple retrievals → synthesize
-   - Ambiguous query → ask clarifying questions
-3. Self-corrects if answer quality is low
-4. Cites all sources
-
-**Implementation**:
-```python
-class AgenticRAG:
-    def query(self, question: str) -> Response:
-        # 1. Analyze question
-        # 2. Plan retrieval strategy
-        # 3. Execute retrieval (potentially multiple rounds)
-        # 4. Check answer quality
-        # 5. Refine if needed
-        # 6. Return with citations
-```
-
-**Test Scenarios**:
-- Simple factual question
-- Multi-hop reasoning question
-- Question requiring synthesis
-- Ambiguous question
-
----
-
-## Optimization Exercise: Production RAG
-
-**Objective**: Optimize RAG system for production.
-
-**Tasks**:
-1. Implement caching:
-   - Query cache
-   - Embedding cache
-2. Add monitoring:
-   - Query latency
-   - Retrieval accuracy
-   - Index size
-3. Optimize chunk size (experiment with different sizes)
-4. Implement incremental indexing
-5. Add health checks
-
-**Performance Goals**:
-- < 2s query latency
-- > 80% retrieval accuracy
-- Efficient memory usage
+**Deliverable**:
+A `kb.py` script that acts as your second brain.
 
 ---
 

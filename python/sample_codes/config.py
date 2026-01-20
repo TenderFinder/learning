@@ -15,16 +15,16 @@ Ensure the models you specify are already pulled in Ollama:
 
 # Primary LLM model used in most examples
 # Recommended: A fast, capable model for general tasks
-PRIMARY_LLM_MODEL = "llama3-groq-tool-use"
+PRIMARY_LLM_MODEL = "llama3.1:8b"
 
 # Alternative LLM model (used in Units 3-6)
 # Good for testing and comparison
-ALTERNATIVE_LLM_MODEL = "llama2-uncensored"
+ALTERNATIVE_LLM_MODEL = "llama3-groq-tool-use"
 
 # List of models for comparison/testing
 # Used in examples that compare multiple models
 COMPARISON_MODELS = [
-    "llama2-uncensored",
+    "llama3.1:8b",
     "deepseek-r1:8b", 
     "llama3-groq-tool-use"
 ]

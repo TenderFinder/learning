@@ -16,3 +16,6 @@ n8n/instructor_guide/
 agentic-ai-env/
 .venv/
 venv/
+
+# Internal Documentation
+python/.internal-docs/

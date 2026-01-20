@@ -9,7 +9,7 @@ This file contains working examples for Unit 1 concepts.
 # Example 1: Basic Ollama Setup and First Interaction
 # ============================================================================
 
-from langchain_community.llms import Ollama
+from langchain_ollama import ChatOllama
 import config
 
 # Models to test - imported from config.py
@@ -28,7 +28,7 @@ def example_1_basic_ollama():
     print("=" * 60)
     
     # Initialize Ollama with primary model from config
-    llm = Ollama(model=config.PRIMARY_LLM_MODEL, temperature=config.CREATIVE_TEMPERATURE)
+    llm = ChatOllama(model=config.PRIMARY_LLM_MODEL, temperature=config.CREATIVE_TEMPERATURE)
     
     # Simple query
     prompt = "Explain what an AI agent is in one sentence."
@@ -92,8 +92,9 @@ def example_2_tools():
 # Example 3: Memory Systems - Conversation History
 # ============================================================================
 
-from langchain_classic.memory import ConversationBufferMemory
-from langchain_classic.chains import ConversationChain
+from langchain_core.prompts import ChatPromptTemplate, MessagesPlaceholder
+from langchain_core.runnables.history import RunnableWithMessageHistory
+from langchain_core.chat_history import InMemoryChatMessageHistory
 
 def example_3_memory():
     """
@@ -103,29 +104,50 @@ def example_3_memory():
     print("Example 3: Memory System")
     print("=" * 60)
     
-    llm = Ollama(model=config.PRIMARY_LLM_MODEL, temperature=config.CREATIVE_TEMPERATURE)
+    llm = ChatOllama(model=config.PRIMARY_LLM_MODEL, temperature=config.CREATIVE_TEMPERATURE)
     
-    # Create a conversation chain with memory
-    memory = ConversationBufferMemory()
-    conversation = ConversationChain(
-        llm=llm,
-        memory=memory,
-        verbose=True
+    # Create a conversation chain with modern memory pattern
+    prompt = ChatPromptTemplate.from_messages([
+        ("system", "You are a helpful assistant."),
+        MessagesPlaceholder(variable_name="history"),
+        ("human", "{input}")
+    ])
+    
+    chain = prompt | llm
+    
+    # Session storage
+    store = {}
+    
+    def get_session_history(session_id: str):
+        if session_id not in store:
+            store[session_id] = InMemoryChatMessageHistory()
+        return store[session_id]
+    
+    # Wrap with message history
+    conversation = RunnableWithMessageHistory(
+        chain,
+        get_session_history,
+        input_messages_key="input",
+        history_messages_key="history"
     )
+    
+    config = {"configurable": {"session_id": "demo_session"}}
     
     # First interaction
     print("\n--- First Interaction ---")
-    response1 = conversation.predict(input="My name is Alice and I'm learning about AI agents.")
-    print(f"Response: {response1}\n")
+    response1 = conversation.invoke({"input": "My name is Alice and I'm learning about AI agents."}, config=config)
+    print(f"Response: {response1.content}\n")
     
     # Second interaction - the agent should remember the name
-    print("\n--- Second Interaction ---")
-    response2 = conversation.predict(input="What's my name?")
-    print(f"Response: {response2}\n")
+    print("\n--- Second Interaction ---")  
+    response2 = conversation.invoke({"input": "What's my name?"}, config=config)
+    print(f"Response: {response2.content}\n")
     
     # Show the conversation history
     print("\n--- Conversation History ---")
-    print(memory.buffer)
+    history = store["demo_session"]
+    for msg in history.messages:
+        print(f"{msg.type}: {msg.content}")
     print("\n")
 
 
@@ -141,7 +163,7 @@ def example_4_agent_loop():
     print("Example 4: Agent Reasoning Loop")
     print("=" * 60)
     
-    llm = Ollama(model=config.PRIMARY_LLM_MODEL, temperature=config.PRECISE_TEMPERATURE)
+    llm = ChatOllama(model=config.PRIMARY_LLM_MODEL, temperature=config.PRECISE_TEMPERATURE)
     
     # Simulate an agent solving a problem
     task = "What is 25 * 4?"
@@ -183,7 +205,7 @@ def example_5_use_cases():
     print("Example 5: Agent Use Case Patterns")
     print("=" * 60)
     
-    llm = Ollama(model=config.PRIMARY_LLM_MODEL, temperature=config.CREATIVE_TEMPERATURE)
+    llm = ChatOllama(model=config.PRIMARY_LLM_MODEL, temperature=config.CREATIVE_TEMPERATURE)
     
     # Use Case 1: Customer Service Agent
     print("\n--- Use Case 1: Customer Service ---")
@@ -245,7 +267,7 @@ def example_6_model_comparison():
     for model_name in models:
         try:
             print(f"\n--- {model_name.upper()} ---")
-            llm = Ollama(model=model_name, temperature=0.5)
+            llm = ChatOllama(model=model_name, temperature=0.5)
             response = llm.invoke(prompt)
             print(f"Response: {response}")
         except Exception as e:
@@ -267,7 +289,7 @@ def example_7_planning():
     print("Example 7: Agent Planning")
     print("=" * 60)
     
-    llm = Ollama(model=config.PRIMARY_LLM_MODEL, temperature=config.PRECISE_TEMPERATURE)
+    llm = ChatOllama(model=config.PRIMARY_LLM_MODEL, temperature=config.PRECISE_TEMPERATURE)
     
     complex_task = """Plan a birthday party for 20 people this weekend."""
     
@@ -295,7 +317,7 @@ def example_8_feedback():
     print("Example 8: Feedback and Self-Correction")
     print("=" * 60)
     
-    llm = Ollama(model=config.PRIMARY_LLM_MODEL, temperature=config.CREATIVE_TEMPERATURE)
+    llm = ChatOllama(model=config.PRIMARY_LLM_MODEL, temperature=config.CREATIVE_TEMPERATURE)
     
     # Initial attempt
     print("\n--- Initial Attempt ---")

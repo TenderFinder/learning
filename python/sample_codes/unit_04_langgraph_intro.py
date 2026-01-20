@@ -7,6 +7,7 @@ This file demonstrates LangGraph fundamentals: states, nodes, edges, and workflo
 
 from typing import TypedDict, Annotated, Literal
 from langgraph.graph import StateGraph, END
+from langgraph.graph.message import add_messages
 import operator
 
 # ============================================================================
@@ -41,7 +42,7 @@ def example_1_basic_state():
 
 class CounterState(TypedDict):
     count: Annotated[int, operator.add]
-    messages: Annotated[list, operator.add]
+    messages: Annotated[list,add_messages]  # Use add_messages for chat messages
 
 
 def increment_node(state: CounterState) -> CounterState:
@@ -188,7 +189,7 @@ def example_3_conditional_edges():
 class LoopState(TypedDict):
     count: int
     max_iterations: int
-    history: Annotated[list, operator.add]
+    history: Annotated[list, add_messages]  # Modern pattern for message lists
 
 
 def process_node(state: LoopState) -> LoopState:
@@ -259,7 +260,7 @@ from langchain_community.llms import Ollama
 import config
 
 class AgentState(TypedDict):
-    messages: Annotated[list, operator.add]
+    messages: Annotated[list, add_messages]  # add_messages handles message IDs
     question: str
     answer: str
 
